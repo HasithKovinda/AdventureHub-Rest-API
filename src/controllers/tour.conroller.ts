@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import Tour, { TourInput } from "../models/tour.model";
-import { TourRepository } from "../Repository/TourRepository";
+import RepositorySingleton from "../singleton/RepositorySingleton";
 
-const tourRepository = new TourRepository(Tour);
+const tourRepository = RepositorySingleton.getTourRepositoryInstance();
 
 export async function createTour(
   req: Request<{}, {}, TourInput>,
