@@ -1,8 +1,15 @@
 import { Request, Response } from "express";
-import Tour from "../models/tour.model";
+import Tour, { TourInput } from "../models/tour.model";
+import { TourRepository } from "../Repository/TourRepository";
 
-export async function createTour(req: Request, res: Response) {
-  const newTour = await Tour.create(req.body);
+const tourRepository = new TourRepository(Tour);
+
+export async function createTour(
+  req: Request<{}, {}, TourInput>,
+  res: Response
+) {
+  const tourData = req.body;
+  const newTour = await tourRepository.create(tourData);
   res.json({ status: "success", tour: newTour });
 }
 
@@ -17,7 +24,7 @@ export async function getSingleTour(
 ) {
   try {
     const tourId = req.params.id;
-    const tour = await Tour.findById(tourId);
+    const tour = await tourRepository.findOne({ _id: tourId });
     res.json({ status: "success", tour });
   } catch (error) {
     res.status(404).json({ status: "fail" });

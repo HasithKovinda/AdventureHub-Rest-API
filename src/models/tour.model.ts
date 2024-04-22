@@ -1,9 +1,23 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-const TourSchema = new mongoose.Schema({
-  name: String,
-});
+export interface TourInput {
+  name: string;
+  price: number;
+}
 
-const Tour = mongoose.model("Tour", TourSchema);
+export interface TourDocument extends TourInput, Document {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const TourSchema = new mongoose.Schema(
+  {
+    name: String,
+    price: Number,
+  },
+  { timestamps: true }
+);
+
+const Tour = mongoose.model<TourDocument>("Tour", TourSchema);
 
 export default Tour;
