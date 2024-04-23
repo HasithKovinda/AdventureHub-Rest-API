@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 const port = config.get<number>("port") || 8000;
 const env = process.env.NODE_ENV;
+console.log("🚀 ~ env:", env);
 
 let connectString = config.get<string>("connection_string");
 connectString =
