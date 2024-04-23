@@ -10,7 +10,7 @@ import {
 export class GenericRepository<T extends Document, U>
   implements IGenericRepository<T, U>
 {
-  private model: Model<T>;
+  protected model: Model<T>;
   constructor(model: Model<T>) {
     this.model = model;
   }

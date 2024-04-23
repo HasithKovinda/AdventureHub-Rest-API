@@ -6,8 +6,8 @@ export interface TourInput {
   price: Number;
   maxGroupSize: Number;
   difficulty: string;
-  ratingAverage: Number;
-  ratingQuantity: Number;
+  ratingsAverage: Number;
+  ratingsQuantity: Number;
   priceDiscount: Number;
   summary: string;
   description: string;
@@ -43,11 +43,11 @@ const TourSchema = new mongoose.Schema({
     type: String,
     required: [true, "A tour must have a difficulty"],
   },
-  ratingAverage: {
+  ratingsAverage: {
     type: Number,
     default: 4.5,
   },
-  ratingQuantity: {
+  ratingsQuantity: {
     type: Number,
     default: 0,
   },
@@ -73,6 +73,7 @@ const TourSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+    select: false,
   },
 });
 

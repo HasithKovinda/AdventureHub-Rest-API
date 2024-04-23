@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Tour, { TourInput } from "../models/tour.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
+import { json } from "stream/consumers";
+import { Operators } from "../Contracts/ITourRepository";
 
 const tourRepository = RepositorySingleton.getTourRepositoryInstance();
 
@@ -18,19 +20,17 @@ export async function createTour(
 }
 
 export async function getTours(
-  req: Request<{}, {}, {}, TourInput>,
+  req: Request<{}, {}, {}, TourInput & Operators>,
   res: Response
 ) {
-  const newObj = { ...req.query };
-
-  const excludeFelids = ["sort", "page", "limit", "fields"];
-
-  excludeFelids.forEach((el) => delete newObj[el as keyof typeof newObj]);
-
-  const tours = await tourRepository.getAll(newObj);
-  return res
-    .status(200)
-    .json({ status: "success", results: tours.length, tours });
+  try {
+    const tours = await tourRepository.getAllTours(req.query);
+    return res
+      .status(200)
+      .json({ status: "success", results: tours.length, tours });
+  } catch (error) {
+    return res.status(404).json({ status: "fail", error });
+  }
 }
 
 export async function getSingleTour(
