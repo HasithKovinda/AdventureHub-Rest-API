@@ -5,7 +5,7 @@ import RepositorySingleton from "../singleton/RepositorySingleton";
 const tourRepository = RepositorySingleton.getTourRepositoryInstance();
 
 export async function createTour(
-  req: Request<{}, {}, TourInput>,
+  req: Request<{}, {}, TourInput, TourInput>,
   res: Response
 ) {
   try {
@@ -17,8 +17,17 @@ export async function createTour(
   }
 }
 
-export async function getTours(req: Request, res: Response) {
-  const tours = await Tour.find();
+export async function getTours(
+  req: Request<{}, {}, {}, TourInput>,
+  res: Response
+) {
+  const newObj = { ...req.query };
+
+  const excludeFelids = ["sort", "page", "limit", "fields"];
+
+  excludeFelids.forEach((el) => delete newObj[el as keyof typeof newObj]);
+
+  const tours = await tourRepository.getAll(newObj);
   return res
     .status(200)
     .json({ status: "success", results: tours.length, tours });
