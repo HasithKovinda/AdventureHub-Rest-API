@@ -8,14 +8,20 @@ export async function createTour(
   req: Request<{}, {}, TourInput>,
   res: Response
 ) {
-  const tourData = req.body;
-  const newTour = await tourRepository.create(tourData);
-  res.json({ status: "success", tour: newTour });
+  try {
+    const tourData = req.body;
+    const newTour = await tourRepository.create(tourData);
+    res.status(201).json({ status: "success", tour: newTour });
+  } catch (error) {
+    res.status(404).json({ status: "fail", err: error });
+  }
 }
 
 export async function getTours(req: Request, res: Response) {
   const tours = await Tour.find();
-  return res.json({ status: "success", results: tours.length, tours });
+  return res
+    .status(200)
+    .json({ status: "success", results: tours.length, tours });
 }
 
 export async function getSingleTour(
@@ -25,8 +31,8 @@ export async function getSingleTour(
   try {
     const tourId = req.params.id;
     const tour = await tourRepository.findOne({ _id: tourId });
-    res.json({ status: "success", tour });
+    res.status(200).json({ status: "success", tour });
   } catch (error) {
-    res.status(404).json({ status: "fail" });
+    res.status(404).json({ status: "fail", err: error });
   }
 }
