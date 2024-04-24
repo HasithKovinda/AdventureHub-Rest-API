@@ -15,4 +15,6 @@ export interface ITourRepository
   getAllToursWithAdvanceFilters(
     query?: FilterQuery<TourInput & Operators>
   ): Promise<TourDocument[]>;
+
+  getToursStatistics(): Promise<TourDocument[]>;
 }

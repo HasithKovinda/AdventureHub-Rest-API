@@ -44,3 +44,28 @@ export async function getSingleTour(
     res.status(404).json({ status: "fail", err: error });
   }
 }
+
+export async function getTourStatus(req: Request, res: Response) {
+  try {
+    const status = await tourRepository.getToursStatistics();
+    res.status(200).json({ status: "success", data: status });
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ status: "fail", err: error });
+  }
+}
+
+export async function getPopularTourYearly(
+  req: Request<{ year: string }>,
+  res: Response
+) {
+  try {
+    const year = +req.params.year;
+    const tours = await tourRepository.getPopularTourOfMonth(year);
+
+    res.status(200).json({ status: "success", data: tours });
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ status: "fail", err: error });
+  }
+}
