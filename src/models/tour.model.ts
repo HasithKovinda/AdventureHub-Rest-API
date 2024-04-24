@@ -1,4 +1,5 @@
 import mongoose, { Document } from "mongoose";
+import slugify from "slugify";
 
 export interface TourInput {
   name: string;
@@ -27,6 +28,7 @@ const TourSchema = new mongoose.Schema({
     trim: true,
     unique: true,
   },
+  slug: String,
   duration: {
     type: Number,
     required: [true, "A tour must have a duration"],
@@ -61,7 +63,6 @@ const TourSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: [true, "A tour must have a  description"],
     trim: true,
   },
   imageCover: {
@@ -75,6 +76,13 @@ const TourSchema = new mongoose.Schema({
     default: Date.now(),
     select: false,
   },
+});
+
+//Document Middleware
+
+TourSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { trim: true, lower: true });
+  next();
 });
 
 const Tour = mongoose.model<TourDocument>("Tour", TourSchema);

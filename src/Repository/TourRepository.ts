@@ -1,7 +1,7 @@
-import { FilterQuery, Model, Document, Query } from "mongoose";
+import { Model } from "mongoose";
 import { GenericRepository } from "./GenericRepository";
 import { ITourRepository, Operators } from "../Contracts/ITourRepository";
-import Tour, { TourDocument, TourInput } from "../models/tour.model";
+import { TourDocument, TourInput } from "../models/tour.model";
 import AdvanceFiltering from "../util/apiFiltering";
 
 export class TourRepository
