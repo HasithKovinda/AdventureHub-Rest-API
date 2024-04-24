@@ -32,7 +32,7 @@ export class GenericRepository<T extends Document, U>
   async update(
     query: FilterQuery<T>,
     update: UpdateQuery<T>,
-    options: QueryOptions
+    options: QueryOptions = { new: true }
   ): Promise<T | null> {
     return await this.model.findByIdAndUpdate(query, update, options);
   }

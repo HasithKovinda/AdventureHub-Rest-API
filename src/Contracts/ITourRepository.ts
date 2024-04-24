@@ -12,7 +12,7 @@ export interface Operators {
 export interface ITourRepository
   extends IGenericRepository<TourDocument, TourInput> {
   //Defined specific methods to Tour Model
-  getAllTours(
+  getAllToursWithAdvanceFilters(
     query?: FilterQuery<TourInput & Operators>
   ): Promise<TourDocument[]>;
 }

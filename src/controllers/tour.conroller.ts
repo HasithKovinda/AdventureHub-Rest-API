@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import Tour, { TourInput } from "../models/tour.model";
+import { TourInput } from "../models/tour.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
-import { json } from "stream/consumers";
 import { Operators } from "../Contracts/ITourRepository";
 
 const tourRepository = RepositorySingleton.getTourRepositoryInstance();
@@ -24,7 +23,7 @@ export async function getTours(
   res: Response
 ) {
   try {
-    const tours = await tourRepository.getAllTours(req.query);
+    const tours = await tourRepository.getAllToursWithAdvanceFilters(req.query);
     return res
       .status(200)
       .json({ status: "success", results: tours.length, tours });
