@@ -111,6 +111,12 @@ TourSchema.post(
   }
 );
 
+//Aggregation Middleware
+TourSchema.pre("aggregate", function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  next();
+});
+
 const Tour = mongoose.model<TourDocument>("Tour", TourSchema);
 
 export default Tour;
