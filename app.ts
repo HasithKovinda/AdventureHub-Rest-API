@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import tourRoute from "./src/routes/tour.route";
+import AppError from "./src/util/AppError";
+import { globalErrorHandler } from "./src/middleware/errorHandler";
 
 // Express Configurations
 
@@ -14,11 +16,12 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/tours", tourRoute);
 
-app.all("*", (req: Request, res: Response) => {
-  return res.status(404).json({
-    status: "fail",
-    message: `Can't find this route ${req.originalUrl} on this server`,
-  });
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
+  next(
+    new AppError(`Can't find this route ${req.originalUrl} on this server`, 404)
+  );
 });
+
+app.use(globalErrorHandler);
 
 export default app;
