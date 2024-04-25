@@ -7,10 +7,7 @@ const env = process.env.NODE_ENV;
 console.log("🚀 ~ env:", env);
 
 let connectString = config.get<string>("connection_string");
-connectString =
-  env === "development"
-    ? config.get<string>("connection_string")
-    : connectString.replace("<PASSWORD>", config.get<string>("DbPassword"));
+connectString = config.get<string>("connection_string");
 
 mongoose
   .connect(connectString)

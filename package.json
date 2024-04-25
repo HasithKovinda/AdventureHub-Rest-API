@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only server.ts",
     "prod": "cross-env NODE_ENV=production ts-node-dev --respawn --transpile-only server.ts",
+    "build": "tsc",
     "mig-dev-imp": "cross-env NODE_ENV=development ts-node-dev ./migration/import.dev.data.ts --import",
     "mig-dev-dele": "cross-env NODE_ENV=development ts-node-dev ./migration/import.dev.data.ts --delete",
     "mig-prod-imp": "cross-env NODE_ENV=production ts-node-dev ./migration/import.dev.data.ts --import",
