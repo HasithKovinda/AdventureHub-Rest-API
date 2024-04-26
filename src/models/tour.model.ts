@@ -114,16 +114,10 @@ TourSchema.pre(
   }
 );
 
-TourSchema.post(
-  /^find/,
-  function (this: mongoose.Query<TourDocument, TourInput>, next) {
-    this.find({ secretTour: { $ne: true } });
-    console.log(
-      `Query Took ${Date.now() - (this as any).start} milliseconds ⌛`
-    );
-    next();
-  }
-);
+TourSchema.post(/^find/, function (docs, next) {
+  console.log(`Query Took ${Date.now() - (this as any).start} milliseconds ⌛`);
+  next();
+});
 
 //Aggregation Middleware
 TourSchema.pre("aggregate", function (next) {
