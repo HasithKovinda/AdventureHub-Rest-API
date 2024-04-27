@@ -16,6 +16,7 @@
   "author": "Hasith Kovinda",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/config": "^3.3.4",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
@@ -25,6 +26,7 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "config": "^3.3.11",
     "express": "^4.19.2",
     "mongoose": "^8.3.2",

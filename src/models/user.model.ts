@@ -1,5 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
 
 export interface UserInput {
   name: string;
@@ -48,6 +49,17 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//Hash password
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+
+  (this as any)["passwordConfirm"] = undefined;
+  next();
+});
 
 const User = mongoose.model<UserDocument>("User", userSchema);
 
