@@ -58,9 +58,12 @@ export function globalErrorHandler(
     const message = `Invalid input data. [${values.join(", ")}]`;
     appError = new AppError(message, 400);
   } else if (error.name === "MongoServerError") {
-    const value = (error as any).keyValue.name;
-    const message = `Duplicate fields value:'${value}'. Please use a different value`;
-    appError = new AppError(message, 400);
+    const mongoError = error as any;
+    if (mongoError.code === 11000) {
+      const value = mongoError.keyValue.name;
+      const message = `Duplicate fields value:'${value}'. Please use a different value`;
+      appError = new AppError(message, 400);
+    }
   }
 
   if (process.env.NODE_ENV === "development") {
