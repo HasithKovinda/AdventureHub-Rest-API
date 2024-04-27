@@ -1,4 +1,5 @@
 import mongoose, { Document } from "mongoose";
+import validator from "validator";
 
 export interface UserInput {
   name: string;
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: [true, "User must have an email address"],
+      validate: [validator.isEmail, "Please provide valid email address"],
     },
     photo: {
       type: String,
@@ -36,6 +38,12 @@ const userSchema = new mongoose.Schema(
     passwordConfirm: {
       type: String,
       required: [true, "Please provide a password"],
+      validate: {
+        validator: function (value: string) {
+          return (this as UserDocument).password === value;
+        },
+        message: "password and password confirm felids not match",
+      },
     },
   },
   { timestamps: true }
