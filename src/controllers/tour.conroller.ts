@@ -41,6 +41,18 @@ export const getSingleTour = catchAsync(async function (
   res.status(200).json({ status: "success", tour });
 });
 
+export const updateTour = catchAsync(async function (
+  req: Request<{ id: string }>,
+  res: Response
+) {
+  const updateBody = req.body as TourInput;
+  const updatedTour = await tourRepository.update(
+    { _id: req.params.id },
+    updateBody
+  );
+  res.status(200).json({ status: "success", data: updatedTour });
+});
+
 export const getTourStatus = catchAsync(async function (
   req: Request,
   res: Response
