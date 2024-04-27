@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import tourRoute from "./src/routes/tour.route";
+import userRoute from "./src/routes/user.route";
 import AppError from "./src/util/AppError";
 import { globalErrorHandler } from "./src/middleware/errorHandler";
 
@@ -15,6 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/tours", tourRoute);
+app.use("/api/v1/user", userRoute);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(
