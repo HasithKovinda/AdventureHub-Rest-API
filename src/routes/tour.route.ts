@@ -6,6 +6,7 @@ import {
   getTourStatus,
   getPopularTourYearly,
   updateTour,
+  deleteTour,
 } from "../controllers/tour.conroller";
 import { aliasTopTours } from "../middleware/topTours";
 const router = express.Router();
@@ -18,6 +19,6 @@ router.route("/popular-tour/:year").get(getPopularTourYearly);
 
 router.route("/").get(getTours).post(createTour);
 
-router.route("/:id").get(getSingleTour).patch(updateTour);
+router.route("/:id").get(getSingleTour).patch(updateTour).delete(deleteTour);
 
 export default router;

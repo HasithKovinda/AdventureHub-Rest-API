@@ -41,18 +41,6 @@ export const getSingleTour = catchAsync(async function (
   res.status(200).json({ status: "success", tour });
 });
 
-export const updateTour = catchAsync(async function (
-  req: Request<{ id: string }>,
-  res: Response
-) {
-  const updateBody = req.body as TourInput;
-  const updatedTour = await tourRepository.update(
-    { _id: req.params.id },
-    updateBody
-  );
-  res.status(200).json({ status: "success", data: updatedTour });
-});
-
 export const getTourStatus = catchAsync(async function (
   req: Request,
   res: Response
@@ -69,4 +57,36 @@ export const getPopularTourYearly = catchAsync(async function (
   const tours = await tourRepository.getPopularTourOfMonth(year);
 
   res.status(200).json({ status: "success", data: tours });
+});
+
+export const updateTour = catchAsync(async function (
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  const updateBody = req.body as TourInput;
+  const updatedTour = await tourRepository.update(
+    { _id: req.params.id },
+    updateBody
+  );
+  if (!updatedTour) {
+    return next(
+      new AppError(`No tour found for this tour id ${req.params.id}`, 404)
+    );
+  }
+  res.status(200).json({ status: "success", data: updatedTour });
+});
+
+export const deleteTour = catchAsync(async function (
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  const tour = await tourRepository.delete({ _id: req.params.id });
+  if (!tour) {
+    return next(
+      new AppError(`No tour found for this tour id ${req.params.id}`, 404)
+    );
+  }
+  res.status(204).json({ status: "success" });
 });
