@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
 function catchAsync<T extends Request, U extends Response>(
-  fn: (req: T, res: U) => Promise<void>
+  fn: (req: T, res: U, next: NextFunction) => Promise<void | NextFunction>
 ) {
   return function (req: T, res: U, next: NextFunction) {
-    fn(req, res).catch(next);
+    fn(req, res, next).catch(next);
   };
 }
 

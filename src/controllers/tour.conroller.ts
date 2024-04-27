@@ -1,8 +1,9 @@
-import { Request, Response, RequestHandler } from "express";
+import { Request, Response, RequestHandler, NextFunction } from "express";
 import { TourInput } from "../models/tour.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { Operators } from "../Contracts/ITourRepository";
 import catchAsync from "../util/catchAsync";
+import AppError from "../util/AppError";
 
 const tourRepository = RepositorySingleton.getTourRepositoryInstance();
 
@@ -26,10 +27,17 @@ export const getTours = catchAsync(async function (
 
 export const getSingleTour = catchAsync(async function (
   req: Request<{ id: string }, {}, {}>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
   const tourId = req.params.id;
   const tour = await tourRepository.findOne({ _id: tourId });
+
+  if (!tour)
+    return next(
+      new AppError(`No tour found for this tour id ${req.params.id}`, 404)
+    );
+
   res.status(200).json({ status: "success", tour });
 });
 
