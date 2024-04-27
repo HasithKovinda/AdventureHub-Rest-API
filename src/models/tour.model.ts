@@ -1,4 +1,4 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, UpdateQuery } from "mongoose";
 import slugify from "slugify";
 
 export interface TourInput {
@@ -19,6 +19,7 @@ export interface TourInput {
 
 export interface TourDocument extends TourInput, Document {
   createdAt: Date;
+  slug: string;
 }
 
 const TourSchema = new mongoose.Schema({
@@ -100,6 +101,14 @@ const TourSchema = new mongoose.Schema({
 
 TourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { trim: true, lower: true });
+  next();
+});
+
+TourSchema.pre("findOneAndUpdate", function (next) {
+  const update = this.getUpdate() as TourDocument;
+  if (update.name) {
+    update.slug = slugify(update.name, { trim: true, lower: true });
+  }
   next();
 });
 
