@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface UserInput {
+export interface UserInput {
   name: string;
   email: string;
   photo: string;
@@ -8,7 +8,7 @@ interface UserInput {
   passwordConfirm: string;
 }
 
-interface UserDocument extends UserInput, Document {
+export interface UserDocument extends UserInput, Document {
   createdAt: Date;
   updatedAt: Date;
 }

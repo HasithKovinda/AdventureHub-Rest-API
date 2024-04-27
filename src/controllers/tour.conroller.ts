@@ -13,7 +13,7 @@ export const createTour = catchAsync(async function (
 ) {
   const tourData = req.body;
   const newTour = await tourRepository.create(tourData);
-  res.status(201).json({ status: "success", tour: newTour });
+  res.status(201).json({ status: "success", data: { tour: newTour } });
 });
 
 export const getTours = catchAsync(async function (
@@ -22,7 +22,9 @@ export const getTours = catchAsync(async function (
 ) {
   const query = req.query as unknown as TourInput & Operators;
   const tours = await tourRepository.getAllToursWithAdvanceFilters(query);
-  res.status(200).json({ status: "success", results: tours.length, tours });
+  res
+    .status(200)
+    .json({ status: "success", results: tours.length, data: { tours } });
 });
 
 export const getSingleTour = catchAsync(async function (
@@ -38,7 +40,7 @@ export const getSingleTour = catchAsync(async function (
       new AppError(`No tour found for this tour id ${req.params.id}`, 404)
     );
 
-  res.status(200).json({ status: "success", tour });
+  res.status(200).json({ status: "success", data: { tour } });
 });
 
 export const getTourStatus = catchAsync(async function (
@@ -46,7 +48,7 @@ export const getTourStatus = catchAsync(async function (
   res: Response
 ) {
   const status = await tourRepository.getToursStatistics();
-  res.status(200).json({ status: "success", data: status });
+  res.status(200).json({ status: "success", data: { status } });
 });
 
 export const getPopularTourYearly = catchAsync(async function (
@@ -56,7 +58,7 @@ export const getPopularTourYearly = catchAsync(async function (
   const year = +req.params.year;
   const tours = await tourRepository.getPopularTourOfMonth(year);
 
-  res.status(200).json({ status: "success", data: tours });
+  res.status(200).json({ status: "success", data: { tours } });
 });
 
 export const updateTour = catchAsync(async function (
@@ -74,7 +76,7 @@ export const updateTour = catchAsync(async function (
       new AppError(`No tour found for this tour id ${req.params.id}`, 404)
     );
   }
-  res.status(200).json({ status: "success", data: updatedTour });
+  res.status(200).json({ status: "success", data: { updatedTour } });
 });
 
 export const deleteTour = catchAsync(async function (
