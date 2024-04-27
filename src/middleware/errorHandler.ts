@@ -13,7 +13,7 @@ function sendErrorDevelopment(err: AppError, res: Response) {
   });
 }
 
-function sendErrorProduction(err: AppError, res: Response) {
+function sendErrorProduction(err: AppError & Error, res: Response) {
   if (err.isOperational) {
     res
       .status(err.statusCode)
@@ -22,23 +22,12 @@ function sendErrorProduction(err: AppError, res: Response) {
     console.error("Error 🧨", err);
     return res
       .status(500)
-      .json({ status: "fail", message: "Something went wrong" });
+      .json({ status: "error", message: "Something went wrong!" });
   }
 }
 
-// function handleCastErrors(error: GlobalError) {
-//   const message = `Invalid ${error.path}: ${error.value}.`;
-//   return new AppError(message, 400);
-// }
-
-// function handleDuplicateFields(error: any) {
-//   const value = error.keyValue.name;
-//   const message = `Duplicate fields value:'${value}'. Please use a different value`;
-//   return new AppError(message, 400);
-// }
-
 export function globalErrorHandler(
-  error: AppError | MongooseError,
+  error: Error,
   req: Request,
   res: Response,
   next: NextFunction
@@ -64,6 +53,9 @@ export function globalErrorHandler(
       const message = `Duplicate fields value:'${value}'. Please use a different value`;
       appError = new AppError(message, 400);
     }
+  } else {
+    appError.isOperational = false;
+    appError.status = "error";
   }
 
   if (process.env.NODE_ENV === "development") {
