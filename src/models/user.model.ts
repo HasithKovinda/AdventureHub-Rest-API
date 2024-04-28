@@ -10,9 +10,17 @@ export interface UserInput {
   passwordConfirm: string;
 }
 
+export enum Role {
+  user = "user",
+  guide = "guide",
+  leadGuid = "lead-guide",
+  admin = "admin",
+}
+
 export interface UserDocument extends UserInput, Document {
   createdAt: Date;
   updatedAt: Date;
+  role: Role;
   passwordChangeAt: Date;
   comparePassword(
     candidatePassword: string,
@@ -36,6 +44,12 @@ const userSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
+    },
+    role: {
+      type: String,
+      enum: ["user", "guide", "lead-guide", "admin"],
+      default: "user",
+      message: "Role is either: user, guide, lead-guide or admin",
     },
     password: {
       type: String,
