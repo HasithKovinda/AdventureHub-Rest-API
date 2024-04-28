@@ -10,11 +10,15 @@ export default class ErrorResponse {
   }
 
   getErrorResponse() {
-    let appError = new AppError("Something went wrong", 500);
+    let appError = new AppError("Something went wrong.", 500);
+
+    // Handle Errors thrown from AppError class
     switch (this.name) {
       case "AppError":
         appError = Object.assign(this.error);
         break;
+
+      //Handled Mongoose Errors
       case "CastError": {
         const castError = this.error as mongoose.Error.CastError;
         const message = `Invalid ${castError.path}: ${castError.value}.`;
@@ -27,7 +31,7 @@ export default class ErrorResponse {
         const values = Object.values(
           validatorError
         ) as mongoose.Error.ValidatorError[];
-        const message = `Invalid input data. [${values.join(", ")}]`;
+        const message = `Invalid input data. [${values.join(", ")}].`;
         appError = new AppError(message, 400);
         break;
       }
@@ -36,11 +40,27 @@ export default class ErrorResponse {
         if (mongoError.code === 11000) {
           const key = Object.keys(mongoError.keyValue)[0];
           const value = mongoError.keyValue[key];
-          const message = `Duplicate fields value:'${value}'. Please use a different value`;
+          const message = `Duplicate fields value:'${value}'. Please use a different value.`;
           appError = new AppError(message, 400);
         }
         break;
       }
+
+      //Handle JWT Token Errors
+      case "TokenExpiredError": {
+        const message =
+          "Your has been expired. Please login in aging to receive a new token.";
+        appError = new AppError(message, 401);
+        break;
+      }
+      case "JsonWebTokenError": {
+        const message =
+          "Your token is invalid. Please login in aging to receive a new token.";
+        appError = new AppError(message, 401);
+        break;
+      }
+
+      //Handle Unexpected Errors
       default: {
         appError.isOperational = false;
         appError.status = "error";
