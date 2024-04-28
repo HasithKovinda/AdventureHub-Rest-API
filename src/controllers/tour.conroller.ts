@@ -22,7 +22,6 @@ export const getTours = catchAsync(async function (
 ) {
   const query = req.query as unknown as TourInput & Operators;
   const tours = await tourRepository.getAllToursWithAdvanceFilters(query);
-  console.log("🚀 ~ tours:", tours);
   res
     .status(200)
     .json({ status: "success", results: tours.length, data: { tours } });

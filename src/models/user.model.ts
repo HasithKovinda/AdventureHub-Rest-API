@@ -1,6 +1,7 @@
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 import mongoose, { Document } from "mongoose";
 import validator from "validator";
-import bcrypt from "bcrypt";
 
 export interface UserInput {
   name: string;
@@ -22,11 +23,14 @@ export interface UserDocument extends UserInput, Document {
   updatedAt: Date;
   role: Role;
   passwordChangeAt: Date;
+  passwordRestToken: string;
+  passwordRestTokenExpires: Date;
   comparePassword(
     candidatePassword: string,
     userPassword: string
   ): Promise<Boolean>;
   checkIsPasswordChange(jwtIat: number): boolean;
+  createRestPasswordToken(): string;
 }
 
 const userSchema = new mongoose.Schema(
@@ -68,6 +72,8 @@ const userSchema = new mongoose.Schema(
       },
     },
     passwordChangeAt: Date,
+    passwordRestToken: String,
+    passwordRestTokenExpires: Date,
   },
   { timestamps: true }
 );
@@ -81,6 +87,13 @@ userSchema.pre("save", async function (next) {
 
   //remove password confirm from the database
   (this as any)["passwordConfirm"] = undefined;
+  next();
+});
+
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) return next();
+
+  this.passwordChangeAt = new Date(Date.now() - 1000);
   next();
 });
 
@@ -98,6 +111,20 @@ userSchema.methods.checkIsPasswordChange = function (jwtIat: number) {
     return jwtIat < changeTimeStamp;
   }
   return false;
+};
+
+userSchema.methods.createRestPasswordToken = function () {
+  let self = this as UserDocument;
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  console.log("resetToken", resetToken);
+  self.passwordRestToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  self.passwordRestTokenExpires = (Date.now() +
+    10 * 60 * 1000) as unknown as Date;
+  console.log("pass", self.passwordRestToken);
+  return resetToken;
 };
 
 const User = mongoose.model<UserDocument>("User", userSchema);
