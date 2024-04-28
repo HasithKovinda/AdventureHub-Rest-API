@@ -1,4 +1,4 @@
-import mongoose, { Document, UpdateQuery } from "mongoose";
+import mongoose, { Document } from "mongoose";
 import slugify from "slugify";
 
 export interface TourInput {

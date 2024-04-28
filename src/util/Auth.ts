@@ -1,4 +1,5 @@
-import jwt, { SignOptions } from "jsonwebtoken";
+import { promisify } from "util";
+import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import config from "config";
 
 export default class Auth {
@@ -11,10 +12,19 @@ export default class Auth {
   }
 
   signIn(
-    payload: Object,
+    payload: { [key: string]: any },
     options: SignOptions = { expiresIn: this.expires_time }
   ) {
     const token = jwt.sign(payload, this.secret_key, options);
     return token;
+  }
+
+  async verify(token: string) {
+    const verify = promisify(jwt.verify) as (
+      token: string,
+      secret: jwt.Secret
+    ) => Promise<JwtPayload>;
+    const decodedToken = await verify(token, this.secret_key);
+    return decodedToken;
   }
 }

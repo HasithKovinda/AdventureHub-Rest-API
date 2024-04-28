@@ -13,6 +13,12 @@ export interface UserInput {
 export interface UserDocument extends UserInput, Document {
   createdAt: Date;
   updatedAt: Date;
+  passwordChangeAt: Date;
+  comparePassword(
+    candidatePassword: string,
+    userPassword: string
+  ): Promise<Boolean>;
+  checkIsPasswordChange(jwtIat: number): boolean;
 }
 
 const userSchema = new mongoose.Schema(
@@ -35,6 +41,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide a password"],
       minLength: 6,
+      select: false,
     },
     passwordConfirm: {
       type: String,
@@ -46,6 +53,7 @@ const userSchema = new mongoose.Schema(
         message: "password and password confirm felids not match",
       },
     },
+    passwordChangeAt: Date,
   },
   { timestamps: true }
 );
@@ -61,6 +69,22 @@ userSchema.pre("save", async function (next) {
   (this as any)["passwordConfirm"] = undefined;
   next();
 });
+
+userSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+  userPassword: string
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.checkIsPasswordChange = function (jwtIat: number) {
+  let self = this as UserDocument;
+  if (self.passwordChangeAt) {
+    const changeTimeStamp = Number(self.passwordChangeAt.getTime() / 1000);
+    return jwtIat < changeTimeStamp;
+  }
+  return false;
+};
 
 const User = mongoose.model<UserDocument>("User", userSchema);
 

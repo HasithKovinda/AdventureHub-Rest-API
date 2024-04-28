@@ -24,7 +24,7 @@ export class GenericRepository<T extends Document, U>
   }
   async findOne(
     query: FilterQuery<T>,
-    options: QueryOptions = { lean: true }
+    options?: QueryOptions
   ): Promise<T | null> {
     return await this.model.findOne(query, {}, options);
   }
