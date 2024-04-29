@@ -6,7 +6,6 @@ import { UserDocument, UserInput } from "../models/user.model";
 import Auth from "../util/Auth";
 import AppError from "../util/AppError";
 import { EmailService } from "../util/emailService";
-import { token } from "morgan";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 

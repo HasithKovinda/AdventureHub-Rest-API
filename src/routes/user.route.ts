@@ -7,15 +7,22 @@ import {
   updatePassword,
   protectRoute,
 } from "../controllers/auth.controller";
-import { updateMe } from "../controllers/user.controller";
+import {
+  deleteMe,
+  getAllUsers,
+  updateMe,
+} from "../controllers/user.controller";
 
-const route = express.Router();
+const router = express.Router();
 
-route.post("/signup", signUp);
-route.post("/login", login);
-route.post("/forgetPassword", forgetPassword);
-route.patch("/resetPassword/:token", resetPassword);
-route.patch("/updateMyPassword", protectRoute, updatePassword);
-route.patch("/updateMe", protectRoute, updateMe);
+router.post("/signup", signUp);
+router.post("/login", login);
+router.post("/forgetPassword", forgetPassword);
+router.patch("/resetPassword/:token", resetPassword);
+router.patch("/updateMyPassword", protectRoute, updatePassword);
+router.patch("/updateMe", protectRoute, updateMe);
+router.delete("/deleteMe", protectRoute, deleteMe);
 
-export default route;
+router.route("/").get(getAllUsers);
+
+export default router;

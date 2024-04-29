@@ -25,6 +25,7 @@ export interface UserDocument extends UserInput, Document {
   passwordChangeAt: Date;
   passwordRestToken: string;
   passwordRestTokenExpires: Date;
+  active: Boolean;
   comparePassword(
     candidatePassword: string,
     userPassword: string
@@ -74,6 +75,11 @@ const userSchema = new mongoose.Schema(
     passwordChangeAt: Date,
     passwordRestToken: String,
     passwordRestTokenExpires: Date,
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
+    },
   },
   { timestamps: true }
 );
@@ -96,6 +102,14 @@ userSchema.pre("save", function (next) {
   this.passwordChangeAt = new Date(Date.now() - 1000);
   next();
 });
+
+userSchema.pre(
+  /^find/,
+  function (this: mongoose.Query<UserDocument, UserDocument>, next) {
+    this.find({ active: { $ne: false } });
+    next();
+  }
+);
 
 userSchema.methods.comparePassword = async function (
   candidatePassword: string,

@@ -19,7 +19,8 @@ export class GenericRepository<T extends Document, U>
     return await this.model.create(body);
   }
   async getAll(query?: FilterQuery<T>): Promise<T[]> {
-    query = query ? query : [];
+    query = query ? query : {};
+    console.log("🚀 ~ getAll ~ query:", query);
     return await this.model.find(query);
   }
   async findOne(

@@ -6,6 +6,19 @@ import AppError from "../util/AppError";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
+export const getAllUsers = catchAsync(async function (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+  const users = await userRepository.getAll();
+
+  res
+    .status(200)
+    .json({ status: "success", results: users.length, data: { users } });
+});
+
 export const updateMe = catchAsync(async function (
   req: Request<{}, {}, { name: string; email: string }>,
   res: Response<{}, { user: UserDocument }>,
@@ -23,4 +36,14 @@ export const updateMe = catchAsync(async function (
   );
 
   res.status(200).json({ status: "success", data: { user: updatedUser } });
+});
+
+export const deleteMe = catchAsync(async function (
+  req: Request,
+  res: Response<{}, { user: UserDocument }>,
+  next: NextFunction
+) {
+  await userRepository.update({ _id: res.locals.user.id }, { active: false });
+
+  res.status(204).json({ status: "success", data: null });
 });
