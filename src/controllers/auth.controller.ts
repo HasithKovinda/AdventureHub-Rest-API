@@ -6,6 +6,7 @@ import { UserDocument, UserInput } from "../models/user.model";
 import Auth from "../util/Auth";
 import AppError from "../util/AppError";
 import { EmailService } from "../util/emailService";
+import { token } from "morgan";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
@@ -164,6 +165,34 @@ export const resetPassword = catchAsync(async function (
   await user.save();
 
   const token = new Auth().signIn({ id: user._id });
+
+  res.status(200).json({ status: "success", token });
+});
+
+export const updatePassword = catchAsync(async function (
+  req: Request<
+    {},
+    {},
+    { currentPassword: string; password: string; passwordConfirm: string }
+  >,
+  res: Response<{}, { user: UserDocument }>,
+  next: NextFunction
+) {
+  const { currentPassword, password, passwordConfirm } = req.body;
+
+  const user = await userRepository.findOne(
+    { _id: res.locals.user._id },
+    { projection: "+password" }
+  );
+
+  if (!user || !(await user?.comparePassword(currentPassword, user.password)))
+    return next(new AppError("password does not match.", 401));
+
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  await user.save();
+
+  const token = new Auth().signIn({ id: user.id });
 
   res.status(200).json({ status: "success", token });
 });
