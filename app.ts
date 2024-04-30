@@ -7,12 +7,14 @@ import userRoute from "./src/routes/user.route";
 import AppError from "./src/util/AppError";
 import { globalErrorHandler } from "./src/middleware/errorHandler";
 
-// Express Configurations
-
 const app = express();
+
 app.use(morgan("dev"));
+
 app.use(helmet());
+
 app.use(express.json());
+
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   limit: 100,
