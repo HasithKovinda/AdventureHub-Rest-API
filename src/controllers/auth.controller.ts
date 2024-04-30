@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { CookieOptions, NextFunction, Request, Response } from "express";
 import crypto from "crypto";
 import catchAsync from "../util/catchAsync";
 import RepositorySingleton from "../singleton/RepositorySingleton";
@@ -6,6 +6,7 @@ import { UserDocument, UserInput } from "../models/user.model";
 import Auth from "../util/Auth";
 import AppError from "../util/AppError";
 import { EmailService } from "../util/emailService";
+import config from "config";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
@@ -22,6 +23,14 @@ export const signUp = catchAsync(async function (
     passwordConfirm,
   });
   const token = new Auth().signIn({ id: newUser._id });
+  const cookieExpireTime = config.get<number>("jwt_cookie_expires");
+  const cookieOptions: CookieOptions = {
+    httpOnly: true,
+    expires: new Date(Date.now() + cookieExpireTime * 24 * 60 * 60 * 1000),
+  };
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  res.cookie("token", token, cookieOptions);
+  (newUser as any)["password"] = undefined;
   res.status(201).json({ status: "success", token, data: { user: newUser } });
 });
 

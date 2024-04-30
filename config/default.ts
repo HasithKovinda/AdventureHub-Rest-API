@@ -8,4 +8,5 @@ export default {
   email_host: "sandbox.smtp.mailtrap.io",
   email_user_name: "fda00591d1bf4a",
   email_password: "4efb10fb99caa9",
+  jwt_cookie_expires: 1,
 };
