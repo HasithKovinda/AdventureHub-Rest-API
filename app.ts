@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
+import rateLimit from "express-rate-limit";
 import tourRoute from "./src/routes/tour.route";
 import userRoute from "./src/routes/user.route";
 import AppError from "./src/util/AppError";
@@ -10,10 +11,13 @@ import { globalErrorHandler } from "./src/middleware/errorHandler";
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log("Hello From Middleware 👏");
-  next();
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 3,
+  message: "Too many requests from this IP. Please try agin after one hour.",
 });
+
+app.use(limiter);
 
 app.use("/api/v1/tours", tourRoute);
 app.use("/api/v1/user", userRoute);
