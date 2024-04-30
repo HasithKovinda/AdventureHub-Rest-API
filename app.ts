@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 import tourRoute from "./src/routes/tour.route";
 import userRoute from "./src/routes/user.route";
 import AppError from "./src/util/AppError";
@@ -10,10 +11,11 @@ import { globalErrorHandler } from "./src/middleware/errorHandler";
 
 const app = express();
 app.use(morgan("dev"));
+app.use(helmet());
 app.use(express.json());
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  limit: 3,
+  limit: 100,
   message: "Too many requests from this IP. Please try agin after one hour.",
 });
 
