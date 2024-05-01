@@ -21,7 +21,7 @@ mongoose
   });
 
 //Read the dev-data json file
-const data = JSON.parse(fs.readFileSync(`${__dirname}/dev-data.json`, "utf-8"));
+const data = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, "utf-8"));
 
 //import Tour data
 async function importDevData() {

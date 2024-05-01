@@ -11,7 +11,6 @@ export const getAllUsers = catchAsync(async function (
   res: Response,
   next: NextFunction
 ) {
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAa");
   const users = await userRepository.getAll();
 
   res
