@@ -20,12 +20,11 @@ export class GenericRepository<T extends Document, U>
   }
   async getAll(query?: FilterQuery<T>): Promise<T[]> {
     query = query ? query : {};
-    console.log("🚀 ~ getAll ~ query:", query);
     return await this.model.find(query);
   }
   async findOne(
     query: FilterQuery<T>,
-    options?: QueryOptions
+    options?: QueryOptions<T>
   ): Promise<T | null> {
     return await this.model.findOne(query, {}, options);
   }

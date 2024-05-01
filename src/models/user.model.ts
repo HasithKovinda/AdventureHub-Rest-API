@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import mongoose, { Document } from "mongoose";
 import validator from "validator";
+import { BLOCK_TIME, MAXIMUM_LOGIN_ATTEMPTS } from "../util/constant";
 
 export interface UserInput {
   name: string;
@@ -26,12 +27,18 @@ export interface UserDocument extends UserInput, Document {
   passwordRestToken: string;
   passwordRestTokenExpires: Date;
   active: Boolean;
+  maxAttempts: number;
+  block: Boolean;
+  blockTime: Date;
   comparePassword(
     candidatePassword: string,
     userPassword: string
   ): Promise<Boolean>;
   checkIsPasswordChange(jwtIat: number): boolean;
   createRestPasswordToken(): string;
+  increaseLoginAttemptsCount(): void;
+  isBlockTimeExceed(): Boolean;
+  blockUser(): void;
 }
 
 const userSchema = new mongoose.Schema(
@@ -72,6 +79,15 @@ const userSchema = new mongoose.Schema(
         message: "password and password confirm felids not match",
       },
     },
+    maxAttempts: {
+      type: Number,
+      select: false,
+    },
+    block: {
+      type: Boolean,
+      select: false,
+    },
+    blockTime: Date,
     passwordChangeAt: Date,
     passwordRestToken: String,
     passwordRestTokenExpires: Date,
@@ -110,6 +126,29 @@ userSchema.pre(
     next();
   }
 );
+
+//Instance Methods
+
+userSchema.methods.increaseLoginAttemptsCount = async function () {
+  let self = this as UserDocument;
+  const attempts = self.maxAttempts ? self.maxAttempts : 0;
+  if (attempts + 1 >= MAXIMUM_LOGIN_ATTEMPTS) return self.blockUser();
+  self.maxAttempts = attempts + 1;
+  console.log(self.maxAttempts);
+};
+
+userSchema.methods.blockUser = async function () {
+  let self = this as UserDocument;
+  self.block = true;
+  self.blockTime = new Date(Date.now() + BLOCK_TIME * 60 * 1000);
+};
+
+userSchema.methods.isBlockTimeExceed = function () {
+  let self = this as UserDocument;
+  if (!self.blockTime) return true;
+  const isTimeExceed = new Date(Date.now()) > self.blockTime;
+  return isTimeExceed;
+};
 
 userSchema.methods.comparePassword = async function (
   candidatePassword: string,

@@ -7,6 +7,7 @@ import Auth from "../util/Auth";
 import AppError from "../util/AppError";
 import { EmailService } from "../util/emailService";
 import config from "config";
+import { BLOCK_TIME } from "../util/constant";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
@@ -40,18 +41,35 @@ export const login = catchAsync(async function (
   next: NextFunction
 ) {
   const { email, password } = req.body;
-  if (!email || !password)
+  if (!email)
     return next(new AppError("Please provide email and password.", 400));
 
   const user = await userRepository.findOne(
     { email },
     {
-      projection: "+password",
+      projection: ["+password +maxAttempts +block"],
     }
   );
 
-  if (!user || !(await user?.comparePassword(password, user.password)))
+  if (user && !user.isBlockTimeExceed()) {
+    return next(
+      new AppError(
+        `Your maximum login attempts has been exceed.Please try agin after ${BLOCK_TIME} minutes.`,
+        429
+      )
+    );
+  }
+
+  if (!user || !(await user?.comparePassword(password, user.password))) {
+    user?.increaseLoginAttemptsCount();
+    user?.save({ validateBeforeSave: false });
     return next(new AppError("email or password incorrect.", 401));
+  }
+
+  (user as any)["maxAttempts"] = undefined;
+  (user as any)["block"] = undefined;
+  (user as any)["blockTime"] = undefined;
+  user.save({ validateBeforeSave: false });
 
   const token = new Auth().signIn({ id: user._id });
   res.status(200).json({ status: "success", token });

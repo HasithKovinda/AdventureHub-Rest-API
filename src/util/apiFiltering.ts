@@ -1,6 +1,7 @@
 import { Model, Document } from "mongoose";
 import { TourInput } from "../models/tour.model";
 import { Operators } from "../Contracts/ITourRepository";
+import { DEFAULT_PAGE_LIMIT, DEFAULT_START_PAGE } from "./constant";
 
 export default class AdvanceFiltering<T extends Document> {
   public query: ReturnType<Model<T>["find"]>;
@@ -45,8 +46,8 @@ export default class AdvanceFiltering<T extends Document> {
   }
 
   public pagination() {
-    const page = Number(this.queryString?.page) || 1;
-    const limit = Number(this.queryString?.limit) || 10;
+    const page = Number(this.queryString?.page) || DEFAULT_START_PAGE;
+    const limit = Number(this.queryString?.limit) || DEFAULT_PAGE_LIMIT;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
     return this;
