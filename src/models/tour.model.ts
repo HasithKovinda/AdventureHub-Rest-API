@@ -1,5 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import slugify from "slugify";
+import { UserDocument } from "./user.model";
 
 export interface TourInput {
   name: string;
@@ -15,6 +16,7 @@ export interface TourInput {
   imageCover: string;
   images: string[];
   startDates: Date[];
+  guides: UserDocument["_id"][];
 }
 
 export interface TourDocument extends TourInput, Document {
@@ -113,6 +115,7 @@ const TourSchema = new mongoose.Schema({
       day: Number,
     },
   ],
+  guides: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -139,9 +142,17 @@ TourSchema.pre("findOneAndUpdate", function (next) {
 
 TourSchema.pre(
   /^find/,
-  function (this: mongoose.Query<TourDocument, TourInput>, next) {
+  function (this: mongoose.Query<TourDocument, TourDocument>, next) {
     this.find({ secretTour: { $ne: true } });
     (this as any).start = Date.now();
+    next();
+  }
+);
+
+TourSchema.pre(
+  /^find/,
+  function (this: mongoose.Query<TourDocument, TourDocument>, next) {
+    this.populate({ path: "guides", select: "-__v -passwordChangeAt" });
     next();
   }
 );
