@@ -5,9 +5,10 @@ import RepositorySingleton from "../singleton/RepositorySingleton";
 import { UserDocument, UserInput } from "../models/user.model";
 import Auth from "../util/Auth";
 import AppError from "../util/AppError";
-import { EmailService } from "../util/emailService";
 import config from "config";
+import { EmailService } from "../util/emailService";
 import { BLOCK_TIME } from "../util/constant";
+import { AuthResponse } from "../util/Response";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
@@ -23,16 +24,14 @@ export const signUp = catchAsync(async function (
     password,
     passwordConfirm,
   });
-  const token = new Auth().signIn({ id: newUser._id });
-  const cookieExpireTime = config.get<number>("jwt_cookie_expires");
-  const cookieOptions: CookieOptions = {
-    httpOnly: true,
-    expires: new Date(Date.now() + cookieExpireTime * 24 * 60 * 60 * 1000),
-  };
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
-  res.cookie("token", token, cookieOptions);
   (newUser as any)["password"] = undefined;
-  res.status(201).json({ status: "success", token, data: { user: newUser } });
+  const token = new Auth().signIn({ id: newUser._id });
+  AuthResponse.sendResponseWithTokenAndData(res, {
+    statusCode: 201,
+    status: "success",
+    token,
+    user: newUser,
+  });
 });
 
 export const login = catchAsync(async function (
@@ -72,7 +71,11 @@ export const login = catchAsync(async function (
   user.save({ validateBeforeSave: false });
 
   const token = new Auth().signIn({ id: user._id });
-  res.status(200).json({ status: "success", token });
+  AuthResponse.sendResponseWithToken(res, {
+    statusCode: 200,
+    status: "success",
+    token,
+  });
 });
 
 export const protectRoute = catchAsync(async function (
@@ -155,9 +158,11 @@ export const forgetPassword = catchAsync(async function (
       )
     );
   }
-  res
-    .status(200)
-    .json({ status: "success", message: "token sent to your email address" });
+  AuthResponse.sendGeneralResponse(res, {
+    statusCode: 200,
+    status: "success",
+    message: "token sent to your email address.",
+  });
 });
 
 export const resetPassword = catchAsync(async function (
@@ -191,8 +196,11 @@ export const resetPassword = catchAsync(async function (
   await user.save();
 
   const token = new Auth().signIn({ id: user._id });
-
-  res.status(200).json({ status: "success", token });
+  AuthResponse.sendResponseWithToken(res, {
+    statusCode: 200,
+    status: "success",
+    token,
+  });
 });
 
 export const updatePassword = catchAsync(async function (
@@ -219,6 +227,9 @@ export const updatePassword = catchAsync(async function (
   await user.save();
 
   const token = new Auth().signIn({ id: user.id });
-
-  res.status(200).json({ status: "success", token });
+  AuthResponse.sendResponseWithToken(res, {
+    statusCode: 200,
+    status: "success",
+    token,
+  });
 });

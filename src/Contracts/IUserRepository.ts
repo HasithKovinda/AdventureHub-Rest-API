@@ -4,4 +4,6 @@ import { IGenericRepository } from "./IGenericRepository";
 export interface IUserRepository
   extends IGenericRepository<UserDocument, UserInput> {
   //Defined specific methods to User Model
+
+  sendResponse(): void;
 }
