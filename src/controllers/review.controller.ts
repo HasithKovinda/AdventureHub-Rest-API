@@ -13,3 +13,14 @@ export const createReview = catchAsync(async function (
   const review = await reviewRepository.create(req.body);
   res.status(201).json({ status: "success", data: { review } });
 });
+
+export const getAllReview = catchAsync(async function (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const review = await reviewRepository.getAll();
+  res
+    .status(201)
+    .json({ status: "success", results: review.length, data: { review } });
+});
