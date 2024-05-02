@@ -6,6 +6,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import tourRoute from "./src/routes/tour.route";
 import userRoute from "./src/routes/user.route";
+import reviewRoute from "./src/routes/review.route";
 import AppError from "./src/util/AppError";
 import { globalErrorHandler } from "./src/middleware/errorHandler";
 
@@ -47,7 +48,7 @@ app.use(
 //Routes
 app.use("/api/v1/tours", tourRoute);
 app.use("/api/v1/user", userRoute);
-
+app.use("/api/v1/review", reviewRoute);
 //Handle not define routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(
