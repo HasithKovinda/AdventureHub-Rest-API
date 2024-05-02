@@ -1,11 +1,14 @@
+import { ReviewRepository } from "../Repository/ReviewRepository";
 import { TourRepository } from "../Repository/TourRepository";
 import { UserRepository } from "../Repository/UserRepository";
+import Review from "../models/review.model";
 import Tour from "../models/tour.model";
 import User from "../models/user.model";
 
 export default class RepositorySingleton {
   private static tourRepositoryInstance: TourRepository;
   private static userRepositoryInstance: UserRepository;
+  private static reviewRepositoryInstance: ReviewRepository;
 
   private constructor() {}
 
@@ -23,5 +26,13 @@ export default class RepositorySingleton {
       this.userRepositoryInstance = userRepository;
     }
     return this.userRepositoryInstance;
+  }
+
+  public static getReviewRepositoryInstance(): ReviewRepository {
+    if (!this.reviewRepositoryInstance) {
+      const reviewRepository = new ReviewRepository(Review);
+      this.reviewRepositoryInstance = reviewRepository;
+    }
+    return this.reviewRepositoryInstance;
   }
 }
