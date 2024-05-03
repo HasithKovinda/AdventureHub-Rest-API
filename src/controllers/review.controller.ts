@@ -21,6 +21,6 @@ export const getAllReview = catchAsync(async function (
 ) {
   const review = await reviewRepository.getAll();
   res
-    .status(201)
+    .status(200)
     .json({ status: "success", results: review.length, data: { review } });
 });

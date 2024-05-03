@@ -24,86 +24,76 @@ export interface TourDocument extends TourInput, Document {
   slug: string;
 }
 
-const TourSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "A tour must have a name"],
-    trim: true,
-    unique: true,
-    minLength: [10, "A tour name should have at least 10 characters"],
-    maxLength: [40, "A tour name should not be exceed 40 characters"],
-  },
-  slug: String,
-  duration: {
-    type: Number,
-    required: [true, "A tour must have a duration"],
-  },
-  price: {
-    type: Number,
-    required: [true, "A tour must have a price"],
-  },
-  maxGroupSize: {
-    type: Number,
-    required: [true, "A tour must have a max group size"],
-  },
-  difficulty: {
-    type: String,
-    required: [true, "A tour must have a difficulty"],
-    enum: {
-      values: ["easy", "medium", "difficult"],
-      message: "difficulty should have easy or medium or difficult",
-    },
-  },
-  ratingsAverage: {
-    type: Number,
-    default: 4.5,
-    min: [1, "A rating should have a value above 1"],
-    max: [5, "A rating should have a value bellow 6"],
-  },
-  ratingsQuantity: {
-    type: Number,
-    default: 0,
-  },
-  priceDiscount: {
-    type: Number,
-    validate: {
-      validator: function (val: Number) {
-        return val < (this as TourInput).price;
-      },
-      message: "Discount price {VALUE} should be less than regular price",
-    },
-  },
-  summary: {
-    type: String,
-    required: [true, "A tour must have a summary"],
-    trim: true,
-  },
-  description: {
-    type: String,
-    trim: true,
-  },
-  imageCover: {
-    type: String,
-    required: [true, "A tour must have a cover image"],
-  },
-  images: [String],
-  startDates: [Date],
-  secretTour: {
-    type: Boolean,
-    default: false,
-  },
-  startLocation: {
-    type: {
+const TourSchema = new mongoose.Schema(
+  {
+    name: {
       type: String,
-      default: "Point",
-      enum: ["Point"],
+      required: [true, "A tour must have a name"],
+      trim: true,
+      unique: true,
+      minLength: [10, "A tour name should have at least 10 characters"],
+      maxLength: [40, "A tour name should not be exceed 40 characters"],
     },
-    coordinates: [Number],
-    address: String,
-    description: String,
-  },
-  Location: [
-    {
+    slug: String,
+    duration: {
+      type: Number,
+      required: [true, "A tour must have a duration"],
+    },
+    price: {
+      type: Number,
+      required: [true, "A tour must have a price"],
+    },
+    maxGroupSize: {
+      type: Number,
+      required: [true, "A tour must have a max group size"],
+    },
+    difficulty: {
+      type: String,
+      required: [true, "A tour must have a difficulty"],
+      enum: {
+        values: ["easy", "medium", "difficult"],
+        message: "difficulty should have easy or medium or difficult",
+      },
+    },
+    ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      min: [1, "A rating should have a value above 1"],
+      max: [5, "A rating should have a value bellow 6"],
+    },
+    ratingsQuantity: {
+      type: Number,
+      default: 0,
+    },
+    priceDiscount: {
+      type: Number,
+      validate: {
+        validator: function (val: Number) {
+          return val < (this as TourInput).price;
+        },
+        message: "Discount price {VALUE} should be less than regular price",
+      },
+    },
+    summary: {
+      type: String,
+      required: [true, "A tour must have a summary"],
+      trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    imageCover: {
+      type: String,
+      required: [true, "A tour must have a cover image"],
+    },
+    images: [String],
+    startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
+    startLocation: {
       type: {
         type: String,
         default: "Point",
@@ -112,16 +102,29 @@ const TourSchema = new mongoose.Schema({
       coordinates: [Number],
       address: String,
       description: String,
-      day: Number,
     },
-  ],
-  guides: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-    select: false,
+    Location: [
+      {
+        type: {
+          type: String,
+          default: "Point",
+          enum: ["Point"],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    guides: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+      select: false,
+    },
   },
-});
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+);
 
 //Document Middleware
 
@@ -148,6 +151,14 @@ TourSchema.pre(
     next();
   }
 );
+
+//Virtual Populate
+
+TourSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "tour",
+  localField: "_id",
+});
 
 TourSchema.pre(
   /^find/,

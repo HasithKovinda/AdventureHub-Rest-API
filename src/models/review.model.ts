@@ -41,6 +41,18 @@ const ReviewSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+//Query Middleware
+ReviewSchema.pre(
+  /^find/,
+  function (this: mongoose.Query<ReviewDocument, ReviewDocument>, next) {
+    this.populate({
+      path: "user",
+      select: "name photo",
+    });
+    next();
+  }
+);
+
 const Review = mongoose.model<ReviewDocument>("Review", ReviewSchema);
 
 export default Review;

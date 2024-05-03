@@ -1,5 +1,5 @@
 import { Request, Response, RequestHandler, NextFunction } from "express";
-import { TourInput } from "../models/tour.model";
+import Tour, { TourInput } from "../models/tour.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { Operators } from "../Contracts/ITourRepository";
 import catchAsync from "../util/catchAsync";
@@ -33,7 +33,10 @@ export const getSingleTour = catchAsync(async function (
   next: NextFunction
 ) {
   const tourId = req.params.id;
-  const tour = await tourRepository.findOne({ _id: tourId });
+  const tour = await tourRepository.findOne(
+    { _id: tourId },
+    { populate: "reviews" }
+  );
 
   if (!tour)
     return next(
