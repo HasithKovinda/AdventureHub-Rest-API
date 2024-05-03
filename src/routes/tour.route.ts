@@ -11,8 +11,13 @@ import {
 import { protectRoute } from "../controllers/auth.controller";
 import { aliasTopTours } from "../middleware/topTours";
 import { restrictAccess } from "../middleware/restrictAccess";
-import { Role, UserDocument } from "../models/user.model";
+import { Role } from "../models/user.model";
+import ReviewRoute from "./review.route";
+
 const router = express.Router();
+
+//Nested Route(merge params)
+router.use("/:tourId/reviews", ReviewRoute);
 
 router.route("/top-5-cheap").get(aliasTopTours, getTours);
 

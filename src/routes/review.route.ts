@@ -4,7 +4,7 @@ import { createReview, getAllReview } from "../controllers/review.controller";
 import { restrictAccess } from "../middleware/restrictAccess";
 import { Role } from "../models/user.model";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router
   .route("/")
