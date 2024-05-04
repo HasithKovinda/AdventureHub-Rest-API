@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-import { TourDocument } from "./tour.model";
+import Tour, { TourDocument } from "./tour.model";
 import { UserDocument } from "./user.model";
 
 export interface ReviewInput {
@@ -12,6 +12,7 @@ export interface ReviewInput {
 export interface ReviewDocument extends ReviewInput, Document {
   createdAt: Date;
   updatedAt: Date;
+  calculateAvgRating: void;
 }
 
 const ReviewSchema = new mongoose.Schema(
@@ -52,6 +53,30 @@ ReviewSchema.pre(
     next();
   }
 );
+
+//Static Method
+ReviewSchema.statics.calculateAvgRating = async function (tourId: string) {
+  const stats = await this.aggregate([
+    {
+      $match: { tour: tourId },
+    },
+    {
+      $group: {
+        _id: "$tour",
+        nRating: { $sum: 1 },
+        avgRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+  await Tour.findByIdAndUpdate(tourId, {
+    ratingsQuantity: stats[0].nRating,
+    ratingsAverage: stats[0].avgRating,
+  });
+};
+
+ReviewSchema.post("save", function () {
+  (this as any).constructor.calculateAvgRating(this.tour);
+});
 
 const Review = mongoose.model<ReviewDocument>("Review", ReviewSchema);
 
