@@ -20,7 +20,7 @@ export class CustomResponse {
     next: NextFunction,
     resourceName: string,
     doc: any | null,
-    id: string
+    id?: string
   ) {
     if (!doc)
       return next(
@@ -40,7 +40,7 @@ export class CustomResponse {
     next: NextFunction,
     resourceName: string,
     doc: any | null,
-    id: string
+    id?: string
   ) {
     if (!doc)
       return next(

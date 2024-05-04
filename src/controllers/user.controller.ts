@@ -15,6 +15,15 @@ export const getAllUsers = catchAsync(async function (
   CustomResponse.sendGetAllResponse(res, "users", users);
 });
 
+export const getMe = catchAsync(async function (
+  req: Request,
+  res: Response<{}, { user: UserDocument }>,
+  next: NextFunction
+) {
+  const user = await userRepository.findOne({ _id: res.locals.user.id });
+  CustomResponse.sendGetOneOrUpdateResponse(res, next, "user", user!);
+});
+
 export const updateMe = catchAsync(async function (
   req: Request<{}, {}, { name: string; email: string }>,
   res: Response<{}, { user: UserDocument }>,
