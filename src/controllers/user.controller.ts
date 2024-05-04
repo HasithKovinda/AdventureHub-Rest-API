@@ -30,7 +30,13 @@ export const updateMe = catchAsync(async function (
     { _id: res.locals.user.id },
     { name, email }
   );
-
+  CustomResponse.sendGetOneOrUpdateResponse(
+    res,
+    next,
+    "user",
+    updatedUser,
+    res.locals.user.id
+  );
   res.status(200).json({ status: "success", data: { user: updatedUser } });
 });
 

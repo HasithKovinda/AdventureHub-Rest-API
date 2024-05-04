@@ -41,7 +41,7 @@ export const getSingleTour = catchAsync(async function (
     { _id: tourId },
     { populate: "reviews" }
   );
-  CustomResponse.sendGetOneResponse(res, next, "tour", tour, tourId);
+  CustomResponse.sendGetOneOrUpdateResponse(res, next, "tour", tour, tourId);
 });
 
 export const getTourStatus = catchAsync(async function (
@@ -67,17 +67,17 @@ export const updateTour = catchAsync(async function (
   res: Response,
   next: NextFunction
 ) {
-  const updateBody = req.body as TourInput;
   const updatedTour = await tourRepository.update(
     { _id: req.params.id },
-    updateBody
+    req.body as TourInput
   );
-  if (!updatedTour) {
-    return next(
-      new AppError(`No tour found for this tour id ${req.params.id}`, 404)
-    );
-  }
-  res.status(200).json({ status: "success", data: { updatedTour } });
+  CustomResponse.sendGetOneOrUpdateResponse(
+    res,
+    next,
+    "tour",
+    updatedTour,
+    req.params.id
+  );
 });
 
 export const deleteTour = catchAsync(async function (

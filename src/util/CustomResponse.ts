@@ -15,7 +15,7 @@ export class CustomResponse {
     });
   }
 
-  static sendGetOneResponse(
+  static sendGetOneOrUpdateResponse(
     res: Response,
     next: NextFunction,
     resourceName: string,
