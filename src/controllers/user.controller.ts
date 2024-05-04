@@ -3,19 +3,16 @@ import catchAsync from "../util/catchAsync";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { UserDocument } from "../models/user.model";
 import AppError from "../util/AppError";
+import { CustomResponse } from "../util/CustomResponse";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
 export const getAllUsers = catchAsync(async function (
   req: Request,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) {
   const users = await userRepository.getAll();
-
-  res
-    .status(200)
-    .json({ status: "success", results: users.length, data: { users } });
+  CustomResponse.sendGetAllResponse(res, "users", users);
 });
 
 export const updateMe = catchAsync(async function (

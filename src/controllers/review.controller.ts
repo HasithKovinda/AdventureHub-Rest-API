@@ -3,28 +3,28 @@ import catchAsync from "../util/catchAsync";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { ReviewInput } from "../models/review.model";
 import { UserDocument } from "../models/user.model";
+import { CustomResponse } from "../util/CustomResponse";
 
 const reviewRepository = RepositorySingleton.getReviewRepositoryInstance();
 
 export const createReview = catchAsync(async function (
   req: Request<{ tourId: string }, {}, ReviewInput>,
-  res: Response<{}, { user: UserDocument }>,
-  next: NextFunction
+  res: Response<{}, { user: UserDocument }>
 ) {
   if (!req.body.tour) req.body.tour = req.params.tourId;
   const { id: user } = res.locals.user;
-  const review = await reviewRepository.create({ ...req.body, user });
-  res.status(201).json({ status: "success", data: { review } });
+  CustomResponse.sendCreateResponse(
+    res,
+    "review",
+    await reviewRepository.create({ ...req.body, user })
+  );
 });
 
 export const getAllReview = catchAsync(async function (
   req: Request<{ tourId: string }>,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) {
   let tourId = req.params.tourId;
   const review = await reviewRepository.getAll(tourId ? { tour: tourId } : {});
-  res
-    .status(200)
-    .json({ status: "success", results: review.length, data: { review } });
+  CustomResponse.sendGetAllResponse(res, "reviews", review);
 });

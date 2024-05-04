@@ -1,8 +1,8 @@
 import config from "config";
 import { CookieOptions, Response } from "express";
-import { UserDocument } from "../models/user.model";
 
 type Status = "success" | "fail";
+
 export class AuthResponse {
   private static prepareCookie() {
     const cookieExpireTime = config.get<number>("jwt_cookie_expires");
@@ -43,14 +43,41 @@ export class AuthResponse {
       statusCode: number;
       status: Status;
       token: string;
-      user: UserDocument;
+      data: any;
     }
   ) {
     res.cookie("token", options.token, this.prepareCookie());
     res.status(options.statusCode).json({
       status: options.status,
       token: options.token,
-      data: { user: options.user },
+      data: { user: options.data },
     });
   }
+
+  // static sendResponseWithData(
+  //   res: Response,
+  //   options: {
+  //     statusCode: number;
+  //     status: Status;
+  //     data: any;
+  //   },
+  //   attributeName:string
+
+  // ) {
+  //   interface JsonData {
+  //     status: Status;
+  //     data: {
+  //       [key: string]: any;
+  //     };
+  //   }
+
+  //  let jsonData:Partial<JsonData>={
+  //   status: options.status,
+  //   data: { [attributeName]: options.data },
+  //  }
+  //  if(options.data instanceof Array){
+  //   jsonData.results = options.data.length
+  //  }
+  //   res.status(options.statusCode).json(jsonData);
+  // }
 }

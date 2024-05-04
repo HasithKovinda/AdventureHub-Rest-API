@@ -1,9 +1,10 @@
 import { Request, Response, RequestHandler, NextFunction } from "express";
-import Tour, { TourInput } from "../models/tour.model";
+import { TourInput } from "../models/tour.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { Operators } from "../Contracts/ITourRepository";
 import catchAsync from "../util/catchAsync";
 import AppError from "../util/AppError";
+import { CustomResponse } from "../util/CustomResponse";
 
 const tourRepository = RepositorySingleton.getTourRepositoryInstance();
 
@@ -11,9 +12,11 @@ export const createTour = catchAsync(async function (
   req: Request<{}, {}, TourInput>,
   res: Response
 ) {
-  const tourData = req.body;
-  const newTour = await tourRepository.create(tourData);
-  res.status(201).json({ status: "success", data: { tour: newTour } });
+  CustomResponse.sendCreateResponse(
+    res,
+    "tour",
+    await tourRepository.create(req.body)
+  );
 });
 
 export const getTours = catchAsync(async function (
@@ -21,10 +24,11 @@ export const getTours = catchAsync(async function (
   res: Response
 ) {
   const query = req.query as unknown as TourInput & Operators;
-  const tours = await tourRepository.getAllToursWithAdvanceFilters(query);
-  res
-    .status(200)
-    .json({ status: "success", results: tours.length, data: { tours } });
+  CustomResponse.sendGetAllResponse(
+    res,
+    "tours",
+    await tourRepository.getAllToursWithAdvanceFilters(query)
+  );
 });
 
 export const getSingleTour = catchAsync(async function (
