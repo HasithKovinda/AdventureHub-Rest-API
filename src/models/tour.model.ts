@@ -126,6 +126,8 @@ const TourSchema = new mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+TourSchema.index({ price: 1, ratingsAverage: 1 });
+
 //Document Middleware
 
 TourSchema.pre("save", function (next) {
