@@ -11,7 +11,6 @@ process.on("uncaughtException", (error: Error) => {
 import app from "./app";
 
 const port = config.get<number>("port") || 8000;
-const env = process.env.NODE_ENV;
 
 let connectString = config.get<string>("connection_string");
 connectString = config.get<string>("connection_string");

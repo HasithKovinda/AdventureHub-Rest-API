@@ -11,7 +11,6 @@ import AppError from "./src/util/AppError";
 import { globalErrorHandler } from "./src/middleware/errorHandler";
 
 const app = express();
-
 app.use(morgan("dev"));
 
 //Set HTTP response headers
