@@ -9,13 +9,19 @@ import {
 } from "../controllers/review.controller";
 import { restrictAccess } from "../middleware/restrictAccess";
 import { Role } from "../models/user.model";
+import { validateTourExits } from "../middleware/reviewBodyValidate";
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route("/")
   .get(protectRoute, getAllReview)
-  .post(protectRoute, restrictAccess(Role.user), createReview);
+  .post(
+    protectRoute,
+    restrictAccess(Role.user),
+    validateTourExits,
+    createReview
+  );
 
 router
   .route("/:id")
