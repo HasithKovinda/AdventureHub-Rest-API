@@ -11,7 +11,7 @@ export const getAllUsers = catchAsync(async function (
   req: Request,
   res: Response
 ) {
-  const users = await userRepository.getAll();
+  const users = await userRepository.getAll(req.query);
   CustomResponse.sendGetAllResponse(res, "users", users);
 });
 
@@ -20,8 +20,8 @@ export const getMe = catchAsync(async function (
   res: Response<{}, { user: UserDocument }>,
   next: NextFunction
 ) {
-  const user = await userRepository.findOne({ _id: res.locals.user.id });
-  CustomResponse.sendGetOneOrUpdateResponse(res, next, "user", user!);
+  const user = res.locals.user;
+  CustomResponse.sendGetOneOrUpdateResponse(res, next, "user", user);
 });
 
 export const updateMe = catchAsync(async function (

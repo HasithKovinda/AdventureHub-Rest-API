@@ -21,16 +21,19 @@ router.use("/:tourId/reviews", ReviewRoute);
 
 router.route("/top-5-cheap").get(aliasTopTours, getTours);
 
-router.route("/tour-status").get(getTourStatus);
+router.route("/tour-status").get(protectRoute, getTourStatus);
 
-router.route("/popular-tour/:year").get(getPopularTourYearly);
+router.route("/popular-tour/:year").get(protectRoute, getPopularTourYearly);
 
-router.route("/").get(protectRoute, getTours).post(createTour);
+router
+  .route("/")
+  .get(getTours)
+  .post(protectRoute, restrictAccess(Role.admin, Role.leadGuid), createTour);
 
 router
   .route("/:id")
   .get(getSingleTour)
-  .patch(updateTour)
+  .patch(protectRoute, restrictAccess(Role.admin, Role.leadGuid), updateTour)
   .delete(protectRoute, restrictAccess(Role.admin, Role.leadGuid), deleteTour);
 
 export default router;
