@@ -35,4 +35,22 @@ export class CustomResponse {
       data: { [resourceName]: doc },
     });
   }
+  static sendDeleteResponse(
+    res: Response,
+    next: NextFunction,
+    resourceName: string,
+    doc: any | null,
+    id: string
+  ) {
+    if (!doc)
+      return next(
+        new AppError(
+          `No ${resourceName} found for this ${resourceName} id ${id}`,
+          404
+        )
+      );
+    res.status(204).json({
+      status: "success",
+    });
+  }
 }

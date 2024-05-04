@@ -86,10 +86,5 @@ export const deleteTour = catchAsync(async function (
   next: NextFunction
 ) {
   const tour = await tourRepository.delete({ _id: req.params.id });
-  if (!tour) {
-    return next(
-      new AppError(`No tour found for this tour id ${req.params.id}`, 404)
-    );
-  }
-  res.status(204).json({ status: "success" });
+  CustomResponse.sendDeleteResponse(res, next, "tour", tour, req.params.id);
 });

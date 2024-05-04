@@ -23,7 +23,7 @@ export const updateMe = catchAsync(async function (
   const { name, email } = req.body;
 
   if (!name && !email) {
-    return next(new AppError("Please provide values for name and email.", 400));
+    return next(new AppError("Please provide values for name or email.", 400));
   }
 
   const updatedUser = await userRepository.update(
@@ -37,7 +37,6 @@ export const updateMe = catchAsync(async function (
     updatedUser,
     res.locals.user.id
   );
-  res.status(200).json({ status: "success", data: { user: updatedUser } });
 });
 
 export const deleteMe = catchAsync(async function (
@@ -46,6 +45,5 @@ export const deleteMe = catchAsync(async function (
   next: NextFunction
 ) {
   await userRepository.update({ _id: res.locals.user.id }, { active: false });
-
   res.status(204).json({ status: "success", data: null });
 });
