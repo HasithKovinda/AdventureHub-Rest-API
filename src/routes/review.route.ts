@@ -13,20 +13,17 @@ import { validateTourExits } from "../middleware/reviewBodyValidate";
 
 const router = express.Router({ mergeParams: true });
 
+router.use(protectRoute);
+
 router
   .route("/")
-  .get(protectRoute, getAllReview)
-  .post(
-    protectRoute,
-    restrictAccess(Role.user),
-    validateTourExits,
-    createReview
-  );
+  .get(getAllReview)
+  .post(restrictAccess(Role.user), validateTourExits, createReview);
 
 router
   .route("/:id")
-  .get(protectRoute, restrictAccess(Role.user), getSingleReview)
-  .patch(protectRoute, restrictAccess(Role.user), updateReview)
-  .delete(protectRoute, restrictAccess(Role.user), deleteReview);
+  .get(restrictAccess(Role.user, Role.admin), getSingleReview)
+  .patch(restrictAccess(Role.user, Role.admin), updateReview)
+  .delete(restrictAccess(Role.user, Role.admin), deleteReview);
 
 export default router;
