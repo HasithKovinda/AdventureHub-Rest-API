@@ -41,13 +41,7 @@ export const getSingleTour = catchAsync(async function (
     { _id: tourId },
     { populate: "reviews" }
   );
-
-  if (!tour)
-    return next(
-      new AppError(`No tour found for this tour id ${req.params.id}`, 404)
-    );
-
-  res.status(200).json({ status: "success", data: { tour } });
+  CustomResponse.sendGetOneResponse(res, next, "tour", tour, tourId);
 });
 
 export const getTourStatus = catchAsync(async function (
