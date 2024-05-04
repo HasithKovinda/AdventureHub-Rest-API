@@ -1,9 +1,8 @@
-import { Request, Response, RequestHandler, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { TourInput } from "../models/tour.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { Operators } from "../Contracts/ITourRepository";
 import catchAsync from "../util/catchAsync";
-import AppError from "../util/AppError";
 import { CustomResponse } from "../util/CustomResponse";
 
 const tourRepository = RepositorySingleton.getTourRepositoryInstance();
