@@ -29,6 +29,16 @@ export const getAllReview = catchAsync(async function (
   CustomResponse.sendGetAllResponse(res, "reviews", review);
 });
 
+export const getSingleReview = catchAsync(async function (
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  let id = req.params.id;
+  const review = await reviewRepository.findOne({ _id: id });
+  CustomResponse.sendGetOneOrUpdateResponse(res, next, "review", review, id);
+});
+
 export const updateReview = catchAsync(async function (
   req: Request<{ id: string }, {}, ReviewDocument>,
   res: Response,
@@ -39,8 +49,18 @@ export const updateReview = catchAsync(async function (
   CustomResponse.sendGetOneOrUpdateResponse(
     res,
     next,
-    "reviews",
+    "review",
     review,
     req.params.id
   );
+});
+
+export const deleteReview = catchAsync(async function (
+  req: Request<{ id: string }, {}, ReviewDocument>,
+  res: Response,
+  next: NextFunction
+) {
+  let reviewId = req.params.id;
+  const review = await reviewRepository.delete({ _id: reviewId });
+  CustomResponse.sendDeleteResponse(res, next, "review", review, req.params.id);
 });

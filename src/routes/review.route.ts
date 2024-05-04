@@ -2,7 +2,9 @@ import express from "express";
 import { protectRoute } from "../controllers/auth.controller";
 import {
   createReview,
+  deleteReview,
   getAllReview,
+  getSingleReview,
   updateReview,
 } from "../controllers/review.controller";
 import { restrictAccess } from "../middleware/restrictAccess";
@@ -17,6 +19,8 @@ router
 
 router
   .route("/:id")
-  .patch(protectRoute, restrictAccess(Role.user), updateReview);
+  .get(protectRoute, restrictAccess(Role.user), getSingleReview)
+  .patch(protectRoute, restrictAccess(Role.user), updateReview)
+  .delete(protectRoute, restrictAccess(Role.user), deleteReview);
 
 export default router;
