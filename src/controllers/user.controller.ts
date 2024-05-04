@@ -7,6 +7,21 @@ import { CustomResponse } from "../util/CustomResponse";
 
 const userRepository = RepositorySingleton.getUserRepositoryInstance();
 
+export const getUser = catchAsync(async function (
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  const user = await userRepository.findOne({ _id: req.params.id });
+  CustomResponse.sendGetOneOrUpdateResponse(
+    res,
+    next,
+    "user",
+    user,
+    req.params.id
+  );
+});
+
 export const getAllUsers = catchAsync(async function (
   req: Request,
   res: Response
@@ -55,4 +70,38 @@ export const deleteMe = catchAsync(async function (
 ) {
   await userRepository.update({ _id: res.locals.user.id }, { active: false });
   res.status(204).json({ status: "success", data: null });
+});
+
+export const updateUser = catchAsync(async function (
+  req: Request<{ id: string }, {}, { email: string; name: string }>,
+  res: Response<{}, { user: UserDocument }>,
+  next: NextFunction
+) {
+  const { name, email } = req.body;
+  const user = await userRepository.update(
+    { _id: req.params.id },
+    { name, email }
+  );
+  CustomResponse.sendGetOneOrUpdateResponse(
+    res,
+    next,
+    "user",
+    user,
+    req.params.id
+  );
+});
+
+export const deleteUser = catchAsync(async function (
+  req: Request,
+  res: Response<{}, { user: UserDocument }>,
+  next: NextFunction
+) {
+  const user = await userRepository.delete({ _id: res.locals.user.id });
+  CustomResponse.sendDeleteResponse(
+    res,
+    next,
+    "user",
+    user,
+    res.locals.user.id
+  );
 });
