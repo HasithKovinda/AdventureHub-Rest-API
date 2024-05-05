@@ -46,13 +46,16 @@ export const updateMe = catchAsync(async function (
 ) {
   const { name, email } = req.body;
 
+  let photo;
+  if (req.file) photo = req.file.filename;
+
   if (!name && !email) {
     return next(new AppError("Please provide values for name or email.", 400));
   }
 
   const updatedUser = await userRepository.update(
     { _id: res.locals.user.id },
-    { name, email }
+    { name, email, photo }
   );
   CustomResponse.sendGetOneOrUpdateResponse(
     res,
