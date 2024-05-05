@@ -45,9 +45,12 @@ export const updateMe = catchAsync(async function (
   next: NextFunction
 ) {
   const { name, email } = req.body;
-
   let photo;
-  if (req.file) photo = req.file.filename;
+  if (req.file) {
+    console.log("File", req.file);
+    console.log("File Name", req.file.filename);
+    photo = req.file.filename;
+  }
 
   if (!name && !email) {
     return next(new AppError("Please provide values for name or email.", 400));

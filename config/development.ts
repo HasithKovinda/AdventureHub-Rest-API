@@ -9,4 +9,7 @@ export default {
   email_user_name: "fda00591d1bf4a",
   email_password: "4efb10fb99caa9",
   jwt_cookie_expires: 1,
+  CLOUDINARY_NAME: "dehxgov2k",
+  CLOUDINARY_API_KEY: "583217883931599",
+  CLOUDINARY_SECRET: "wnS6GeeLavMgpjH1QrDSFewXs9c",
 };
