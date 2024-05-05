@@ -61,6 +61,27 @@ export const getPopularTourYearly = catchAsync(async function (
   res.status(200).json({ status: "success", data: { tours } });
 });
 
+export const getToursWithDistance = catchAsync(async function (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(",");
+  const radius = unit === "mi" ? +distance / 3963.2 : +distance / 6378.1;
+  if (!lat || !lng) {
+    CustomResponse.sendBadRequestResponse(
+      res,
+      next,
+      "Please provide values for latitude and longitude in the format of lat,lng."
+    );
+  }
+  const tours = await tourRepository.getAll({
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
+  CustomResponse.sendGetAllResponse(res, "tours", tours);
+});
+
 export const updateTour = catchAsync(async function (
   req: Request<{ id: string }>,
   res: Response,

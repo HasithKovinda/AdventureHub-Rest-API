@@ -3,6 +3,14 @@ import { Document } from "mongoose";
 import AppError from "./AppError";
 
 export class CustomResponse {
+  static sendBadRequestResponse(
+    res: Response,
+    next: NextFunction,
+    message: string
+  ) {
+    return next(new AppError(message, 404));
+  }
+
   static sendCreateResponse(res: Response, resourceName: string, doc: any) {
     res.status(201).json({ status: "success", data: { [resourceName]: doc } });
   }

@@ -17,6 +17,7 @@ export interface TourInput {
   images: string[];
   startDates: Date[];
   guides: UserDocument["_id"][];
+  startLocation: object;
 }
 
 export interface TourDocument extends TourInput, Document {

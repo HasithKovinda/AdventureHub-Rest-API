@@ -7,6 +7,7 @@ import {
   getPopularTourYearly,
   updateTour,
   deleteTour,
+  getToursWithDistance,
 } from "../controllers/tour.conroller";
 import { protectRoute } from "../controllers/auth.controller";
 import { aliasTopTours } from "../middleware/topTours";
@@ -29,6 +30,10 @@ router
   .route("/")
   .get(getTours)
   .post(protectRoute, restrictAccess(Role.admin, Role.leadGuid), createTour);
+
+router
+  .route("/distance-within/:distance/center/:latlng/unit/:unit")
+  .get(getToursWithDistance);
 
 router
   .route("/:id")
