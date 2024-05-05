@@ -82,6 +82,29 @@ export const getToursWithDistance = catchAsync(async function (
   CustomResponse.sendGetAllResponse(res, "tours", tours);
 });
 
+export const getToursDistance = catchAsync(async function (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(",");
+  const multiplier = unit === "mi" ? 0.000621371 : 0.001;
+  if (!lat || !lng) {
+    CustomResponse.sendBadRequestResponse(
+      res,
+      next,
+      "Please provide values for latitude and longitude in the format of lat,lng."
+    );
+  }
+  const tours = await tourRepository.calculateToursDistance(
+    multiplier,
+    +lat,
+    +lng
+  );
+  CustomResponse.sendGetAllResponse(res, "distances", tours);
+});
+
 export const updateTour = catchAsync(async function (
   req: Request<{ id: string }>,
   res: Response,

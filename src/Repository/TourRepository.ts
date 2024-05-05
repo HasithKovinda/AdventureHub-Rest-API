@@ -92,4 +92,41 @@ export class TourRepository
       },
     ]);
   }
+
+  async calculateToursDistance(
+    multiplier: number,
+    lat: number,
+    lng: number
+  ): Promise<TourDocument[]> {
+    return this.model.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+          distanceField: "distance",
+          distanceMultiplier: multiplier,
+        },
+      },
+      {
+        $project: {
+          distance: 1,
+          name: 1,
+        },
+      },
+      {
+        $addFields: {
+          distance: {
+            $round: ["$distance", 4],
+          },
+        },
+      },
+      {
+        $sort: {
+          distance: 1,
+        },
+      },
+    ]);
+  }
 }

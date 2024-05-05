@@ -8,6 +8,7 @@ import {
   updateTour,
   deleteTour,
   getToursWithDistance,
+  getToursDistance,
 } from "../controllers/tour.conroller";
 import { protectRoute } from "../controllers/auth.controller";
 import { aliasTopTours } from "../middleware/topTours";
@@ -34,6 +35,8 @@ router
 router
   .route("/distance-within/:distance/center/:latlng/unit/:unit")
   .get(getToursWithDistance);
+
+router.route("/distance/center/:latlng/unit/:unit").get(getToursDistance);
 
 router
   .route("/:id")

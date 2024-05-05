@@ -105,7 +105,7 @@ const TourSchema = new mongoose.Schema(
       address: String,
       description: String,
     },
-    Location: [
+    locations: [
       {
         type: {
           type: String,
@@ -129,6 +129,7 @@ const TourSchema = new mongoose.Schema(
 );
 
 TourSchema.index({ price: 1, ratingsAverage: 1 });
+TourSchema.index({ startLocation: "2dsphere" });
 
 //Document Middleware
 
@@ -177,9 +178,15 @@ TourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
-//Aggregation Middleware
+// Aggregation Middleware
 TourSchema.pre("aggregate", function (next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  const filterObj = { $match: { secretTour: { $ne: true } } };
+  const pipe = this.pipeline()[0];
+  if ("$geoNear" in pipe) {
+    this.pipeline().splice(1, 0, filterObj);
+  } else {
+    this.pipeline().unshift(filterObj);
+  }
   next();
 });
 

@@ -17,4 +17,9 @@ export interface ITourRepository
   ): Promise<TourDocument[]>;
 
   getToursStatistics(): Promise<TourDocument[]>;
+  calculateToursDistance(
+    multiplier: number,
+    lat: number,
+    lng: number
+  ): Promise<TourDocument[]>;
 }
