@@ -18,9 +18,10 @@ import {
 } from "../controllers/user.controller";
 import { restrictAccess } from "../middleware/restrictAccess";
 import { Role } from "../models/user.model";
-import uploadProfileImage, {
-  resizeImageAndUpload,
-} from "../middleware/ImageUpload";
+import {
+  setProfileImage,
+  uploadProfileImage,
+} from "../middleware/ProfileImageUpload";
 const router = express.Router();
 
 router.post("/signup", signUp);
@@ -32,7 +33,7 @@ router.patch("/resetPassword/:token", resetPassword);
 router.use(protectRoute);
 
 router.patch("/updateMyPassword", updatePassword);
-router.patch("/updateMe", uploadProfileImage, resizeImageAndUpload, updateMe);
+router.patch("/updateMe", setProfileImage, uploadProfileImage, updateMe);
 router.delete("/deleteMe", deleteMe);
 router.get("/me", getMe);
 

@@ -15,6 +15,10 @@ import { aliasTopTours } from "../middleware/topTours";
 import { restrictAccess } from "../middleware/restrictAccess";
 import { Role } from "../models/user.model";
 import ReviewRoute from "./review.route";
+import {
+  setTourImages,
+  uploadTourImages,
+} from "../middleware/multipleImageUpload";
 
 const router = express.Router();
 
@@ -41,7 +45,13 @@ router.route("/distance/center/:latlng/unit/:unit").get(getToursDistance);
 router
   .route("/:id")
   .get(getSingleTour)
-  .patch(protectRoute, restrictAccess(Role.admin, Role.leadGuid), updateTour)
+  .patch(
+    protectRoute,
+    restrictAccess(Role.admin, Role.leadGuid),
+    setTourImages,
+    uploadTourImages,
+    updateTour
+  )
   .delete(protectRoute, restrictAccess(Role.admin, Role.leadGuid), deleteTour);
 
 export default router;
