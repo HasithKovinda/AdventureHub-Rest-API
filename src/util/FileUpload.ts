@@ -1,6 +1,7 @@
 import config from "config";
-import { UploadApiErrorResponse, v2 as cloudinary } from "cloudinary";
-import sharp, { SharpOptions } from "sharp";
+import { v2 as cloudinary } from "cloudinary";
+import sharp from "sharp";
+import { v4 as uuidv4 } from "uuid";
 import { NextFunction, Request } from "express";
 
 interface imageFile extends Express.Multer.File {
@@ -38,7 +39,8 @@ export class FileUpload {
       );
       const image_url = await this.cloudnaryUpload(
         resizedBuffer,
-        "AdventurHub Users"
+        "AdventurHub Users",
+        "user"
       );
       if (image_url) {
         if (req.file) req.file.filename = image_url;
@@ -60,7 +62,8 @@ export class FileUpload {
       const imageCoverBuffer = await this.resizeImage(file.buffer, 2000, 1333);
       const imageCover = await this.cloudnaryUpload(
         imageCoverBuffer,
-        "AdventureHub Tours"
+        "AdventureHub Tours",
+        "imageCover"
       );
       req.body.imageCover = imageCover;
       //Upload images array
@@ -68,7 +71,11 @@ export class FileUpload {
       const files: imageFile[] = (req.files as any).images as imageFile[];
       const buffersPromise = files.map(async (file) => {
         const buffer = await this.resizeImage(file.buffer, 2000, 1333);
-        const url = await this.cloudnaryUpload(buffer, "AdventureHub Tours");
+        const url = await this.cloudnaryUpload(
+          buffer,
+          "AdventureHub Tours",
+          "images"
+        );
         req.body.images.push(url);
       });
 
@@ -92,7 +99,12 @@ export class FileUpload {
       .toBuffer();
   }
 
-  private async cloudnaryUpload(data: Buffer, folderName: string) {
+  private async cloudnaryUpload(
+    data: Buffer,
+    folderName: string,
+    resourceType: string
+  ) {
+    const fileName = `${resourceType}-${uuidv4()}`;
     const image: CloudinaryUploadResult = await new Promise(
       (resolve, reject) => {
         cloudinary.uploader
@@ -100,6 +112,7 @@ export class FileUpload {
             {
               resource_type: "auto",
               folder: folderName,
+              public_id: fileName,
             },
             function (error, result) {
               if (error) {
