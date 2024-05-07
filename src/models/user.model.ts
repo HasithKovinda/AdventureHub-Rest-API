@@ -35,7 +35,7 @@ export interface UserDocument extends UserInput, Document {
     userPassword: string
   ): Promise<Boolean>;
   checkIsPasswordChange(jwtIat: number): boolean;
-  createRestPasswordToken(): string;
+  createPasswordRestToken(): string;
   increaseLoginAttemptsCount(): void;
   isBlockTimeExceed(): Boolean;
   blockUser(): void;
@@ -166,17 +166,15 @@ userSchema.methods.checkIsPasswordChange = function (jwtIat: number) {
   return false;
 };
 
-userSchema.methods.createRestPasswordToken = function () {
+userSchema.methods.createPasswordRestToken = function () {
   let self = this as UserDocument;
   const resetToken = crypto.randomBytes(32).toString("hex");
-  console.log("resetToken", resetToken);
   self.passwordRestToken = crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
   self.passwordRestTokenExpires = (Date.now() +
     10 * 60 * 1000) as unknown as Date;
-  console.log("pass", self.passwordRestToken);
   return resetToken;
 };
 

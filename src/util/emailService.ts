@@ -53,4 +53,10 @@ export class EmailService {
       name: this.user.name,
     });
   }
+  async sendPasswordRestToken() {
+    await this.send("passwordReset", "Password Rest Token", {
+      name: this.user.name,
+      url: this.url,
+    });
+  }
 }

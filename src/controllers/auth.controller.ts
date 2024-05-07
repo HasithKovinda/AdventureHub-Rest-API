@@ -134,26 +134,21 @@ export const forgetPassword = catchAsync(async function (
   const user = await userRepository.findOne({ email });
   if (!user)
     return next(new AppError("No user found for this email address.", 404));
-  const resetToken = user.createRestPasswordToken();
-  user.save({ validateBeforeSave: false });
+  const resetToken = user.createPasswordRestToken();
+  await user.save({ validateBeforeSave: false });
 
   const resetUrl = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/users/${resetToken}`;
-
-  const message = `Please click on this link ${resetUrl}  to reset your password`;
-
-  const subject = "Password Reset Email";
-
+  )}/api/v1/users/resetPassword/${resetToken}`;
   try {
-    await new EmailService().sendEmail({ to: email, subject, text: message });
+    await new EmailService(user, resetUrl).sendPasswordRestToken();
   } catch (error) {
     (user as any)["passwordRestToken"] = undefined;
     (user as any)["passwordRestTokenExpires"] = undefined;
     await user.save({ validateBeforeSave: false });
     return next(
       new AppError(
-        "There was an error sending the email. Please try agin leter",
+        "There was an error sending the email. Please try agin latter",
         500
       )
     );
