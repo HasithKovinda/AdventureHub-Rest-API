@@ -1,11 +1,10 @@
-import { CookieOptions, NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import crypto from "crypto";
 import catchAsync from "../util/catchAsync";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import { UserDocument, UserInput } from "../models/user.model";
 import Auth from "../util/Auth";
 import AppError from "../util/AppError";
-import config from "config";
 import { EmailService } from "../util/emailService";
 import { BLOCK_TIME } from "../util/constant";
 import { AuthResponse } from "../util/Response";
@@ -31,7 +30,7 @@ export const signUp = catchAsync(async function (
     statusCode: 201,
     status: "success",
     token,
-    user: newUser,
+    data: newUser,
   });
 });
 
