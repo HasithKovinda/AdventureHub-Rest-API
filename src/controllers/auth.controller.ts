@@ -26,6 +26,7 @@ export const signUp = catchAsync(async function (
   });
   (newUser as any)["password"] = undefined;
   const token = new Auth().signIn({ id: newUser._id });
+  await new EmailService(newUser).sendWelcome();
   AuthResponse.sendResponseWithTokenAndData(res, {
     statusCode: 201,
     status: "success",
