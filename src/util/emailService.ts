@@ -1,8 +1,9 @@
 import nodemailer, { Transporter } from "nodemailer";
 import config from "config";
 import Mail from "nodemailer/lib/mailer";
-import { UserInput } from "../models/user.model";
 import ejs from "ejs";
+import { convert } from "html-to-text";
+import { UserInput } from "../models/user.model";
 
 export class EmailService {
   private host: string;
@@ -20,14 +21,28 @@ export class EmailService {
   }
 
   private createNewTransport(): Transporter {
-    return nodemailer.createTransport({
-      host: this.host,
-      port: this.port,
-      auth: {
-        user: this.emailUserName,
-        pass: this.emailPassword,
-      },
-    });
+    if (this.env === "production") {
+      const sendGridUserName = config.get<string>("SEND_GRID_USER_NAME");
+      const sendGridPassword = config.get<string>("SEND_GRID_PASSWORD");
+      const sendGridHost = config.get<string>("SEND_GRID_HOST");
+      return nodemailer.createTransport({
+        service: "SendGrid",
+        host: sendGridHost,
+        auth: {
+          user: sendGridUserName,
+          pass: sendGridPassword,
+        },
+      });
+    } else {
+      return nodemailer.createTransport({
+        host: this.host,
+        port: this.port,
+        auth: {
+          user: this.emailUserName,
+          pass: this.emailPassword,
+        },
+      });
+    }
   }
 
   async send(templateName: string, subject: string, data: object) {
@@ -37,12 +52,15 @@ export class EmailService {
         data
       ),
     });
+    const from = (
+      this.env === "production" ? config.get("FROM") : "Adventure@hub.io"
+    ) as string;
     const mailOptions: Mail.Options = {
       to: this.user.email,
-      from: "Hasith Kovinda <adventure@inc.io>",
+      from,
       subject,
       html,
-      text: "",
+      text: convert(html),
     };
 
     await this.createNewTransport().sendMail(mailOptions);
