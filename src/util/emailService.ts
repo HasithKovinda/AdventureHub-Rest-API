@@ -14,20 +14,19 @@ export class EmailService {
 
   constructor(public user: UserInput, public url?: string) {
     this.env = process.env.NODE_ENV as string;
-    this.host = config.get<string>("EMAIL_HOST") || "";
-    this.port = config.get<number>("EMAIL_PORT") || 0;
-    this.emailUserName = config.get<string>("EMAIL_USER_NAME") || "";
-    this.emailPassword = config.get<string>("EMAIL_PASSWORD") || "";
+    this.host = config.get<string>("EMAIL_HOST");
+    this.port = config.get<number>("EMAIL_PORT");
+    this.emailUserName = config.get<string>("EMAIL_USER_NAME");
+    this.emailPassword = config.get<string>("EMAIL_PASSWORD");
   }
 
   private createNewTransport(): Transporter {
     if (this.env === "production") {
       const sendGridUserName = config.get<string>("SEND_GRID_USER_NAME");
       const sendGridPassword = config.get<string>("SEND_GRID_PASSWORD");
-      const sendGridHost = config.get<string>("SEND_GRID_HOST");
       return nodemailer.createTransport({
         service: "SendGrid",
-        host: sendGridHost,
+        host: this.host,
         auth: {
           user: sendGridUserName,
           pass: sendGridPassword,
