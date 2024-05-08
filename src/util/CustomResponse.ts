@@ -1,5 +1,4 @@
 import { NextFunction, Response } from "express";
-import { Document } from "mongoose";
 import AppError from "./AppError";
 
 export class CustomResponse {

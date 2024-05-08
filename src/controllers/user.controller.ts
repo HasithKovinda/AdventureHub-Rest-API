@@ -47,8 +47,6 @@ export const updateMe = catchAsync(async function (
   const { name, email } = req.body;
   let photo;
   if (req.file) {
-    console.log("File", req.file);
-    console.log("File Name", req.file.filename);
     photo = req.file.filename;
   }
 

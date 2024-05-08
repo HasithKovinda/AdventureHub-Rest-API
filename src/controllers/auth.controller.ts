@@ -72,7 +72,7 @@ export const login = catchAsync(async function (
   (user as any)["maxAttempts"] = undefined;
   (user as any)["block"] = undefined;
   (user as any)["blockTime"] = undefined;
-  user.save({ validateBeforeSave: false });
+  await user.save({ validateBeforeSave: false });
 
   const token = new Auth().signIn({ id: user._id });
   AuthResponse.sendResponseWithToken(res, {

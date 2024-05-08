@@ -5,7 +5,7 @@ type Status = "success" | "fail";
 
 export class AuthResponse {
   private static prepareCookie() {
-    const cookieExpireTime = config.get<number>("jwt_cookie_expires");
+    const cookieExpireTime = config.get<number>("JWT_COOKIE_EXPIRES");
     const env = process.env.NODE_ENV;
     //expires within 24 hours
     const cookieOptions: CookieOptions = {
@@ -53,31 +53,4 @@ export class AuthResponse {
       data: { user: options.data },
     });
   }
-
-  // static sendResponseWithData(
-  //   res: Response,
-  //   options: {
-  //     statusCode: number;
-  //     status: Status;
-  //     data: any;
-  //   },
-  //   attributeName:string
-
-  // ) {
-  //   interface JsonData {
-  //     status: Status;
-  //     data: {
-  //       [key: string]: any;
-  //     };
-  //   }
-
-  //  let jsonData:Partial<JsonData>={
-  //   status: options.status,
-  //   data: { [attributeName]: options.data },
-  //  }
-  //  if(options.data instanceof Array){
-  //   jsonData.results = options.data.length
-  //  }
-  //   res.status(options.statusCode).json(jsonData);
-  // }
 }

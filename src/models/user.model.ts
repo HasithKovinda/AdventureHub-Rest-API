@@ -134,7 +134,6 @@ userSchema.methods.increaseLoginAttemptsCount = async function () {
   const attempts = self.maxAttempts ? self.maxAttempts : 0;
   if (attempts + 1 >= MAXIMUM_LOGIN_ATTEMPTS) return self.blockUser();
   self.maxAttempts = attempts + 1;
-  console.log(self.maxAttempts);
 };
 
 userSchema.methods.blockUser = async function () {

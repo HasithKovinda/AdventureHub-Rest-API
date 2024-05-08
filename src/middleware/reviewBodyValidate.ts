@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { UserDocument } from "../models/user.model";
 import RepositorySingleton from "../singleton/RepositorySingleton";
 import AppError from "../util/AppError";
-import { ReviewInput } from "../models/review.model";
 
 export async function validateTourExits(
   req: Request<{ tourId: string }>,
