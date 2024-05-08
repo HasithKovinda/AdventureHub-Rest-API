@@ -12,6 +12,7 @@ export default {
   JWT_EXPIRES_TIME: process.env.JWT_EXPIRES_TIME,
   JWT_COOKIE_EXPIRES: Number(process.env.JWT_COOKIE_EXPIRES),
   EMAIL_HOST: process.env.EMAIL_HOST,
+  EMAIL_PORT: process.env.EMAIL_PORT,
   SEND_GRID_USER_NAME: process.env.SEND_GRID_USER_NAME,
   SEND_GRID_PASSWORD: process.env.SEND_GRID_PASSWORD,
   FROM: process.env.FROM,
