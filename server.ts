@@ -13,7 +13,6 @@ import app from "./app";
 const port = config.get<number>("PORT") || 8000;
 
 let connectString = config.get<string>("CONNECTION_STRING");
-connectString = config.get<string>("CONNECTION_STRING");
 
 mongoose.connect(connectString).then(() => {
   console.log("Db connection successful ✨");

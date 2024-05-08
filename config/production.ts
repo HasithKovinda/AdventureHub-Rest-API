@@ -1,0 +1,22 @@
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: `${__dirname}/../production.env`,
+  override: true,
+});
+
+export default {
+  PORT: Number(process.env.PORT),
+  CONNECTION_STRING: process.env.CONNECTION_STRING,
+  JWT_SECRET: process.env.JWT_SECRET,
+  JWT_EXPIRES_TIME: process.env.JWT_EXPIRES_TIME,
+  JWT_COOKIE_EXPIRES: Number(process.env.JWT_COOKIE_EXPIRES),
+  SEND_GRID_HOST: process.env.SEND_GRID_HOST,
+  SEND_GRID_USER_NAME: process.env.SEND_GRID_USER_NAME,
+  SEND_GRID_PASSWORD: process.env.SEND_GRID_PASSWORD,
+  FROM: process.env.FROM,
+  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_SECRET: process.env.CLOUDINARY_SECRET,
+  MY_NAME: "HASITH KOVINDA ",
+};
