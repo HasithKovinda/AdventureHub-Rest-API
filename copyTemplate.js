@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 
-fs.copy("./src/templates", "./build/templates")
+fs.copy(`${__dirname}/src/templates`, `${__dirname}/build/templates`)
   .then(() => {
     console.log("Templates copied successfully!");
   })
