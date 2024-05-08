@@ -5,7 +5,7 @@ import Tour from "../src/models/tour.model";
 import User from "../src/models/user.model";
 import Review from "../src/models/review.model";
 
-let connectString = config.get<string>("connection_string");
+let connectString = config.get<string>("CONNECTION_STRING");
 
 mongoose
   .connect(connectString)
