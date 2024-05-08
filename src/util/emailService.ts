@@ -13,11 +13,11 @@ export class EmailService {
   private env: string;
 
   constructor(public user: UserInput, public url?: string) {
-    this.host = config.get<string>("EMAIL_HOST");
-    this.port = config.get<number>("EMAIL_PORT");
-    this.emailUserName = config.get<string>("EMAIL_USER_NAME");
-    this.emailPassword = config.get<string>("EMAIL_PASSWORD");
     this.env = process.env.NODE_ENV as string;
+    this.host = config.get<string>("EMAIL_HOST") || "";
+    this.port = config.get<number>("EMAIL_PORT") || 0;
+    this.emailUserName = config.get<string>("EMAIL_USER_NAME") || "";
+    this.emailPassword = config.get<string>("EMAIL_PASSWORD") || "";
   }
 
   private createNewTransport(): Transporter {
