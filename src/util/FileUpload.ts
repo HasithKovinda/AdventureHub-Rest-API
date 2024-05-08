@@ -104,6 +104,7 @@ export class FileUpload {
     folderName: string,
     resourceType: string
   ) {
+    //generate file name
     const fileName = `${resourceType}-${uuidv4()}`;
     const image: CloudinaryUploadResult = await new Promise(
       (resolve, reject) => {
@@ -125,6 +126,6 @@ export class FileUpload {
           .end(data);
       }
     );
-    return image.secure_url;
+    return image.url;
   }
 }
