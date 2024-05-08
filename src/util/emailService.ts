@@ -7,14 +7,18 @@ import { UserInput } from "../models/user.model";
 
 export class EmailService {
   private host: string;
-  private port: number;
-  private emailUserName: string;
-  private emailPassword: string;
+  private port?: number;
+  private emailUserName?: string;
+  private emailPassword?: string;
   private env: string;
 
   constructor(public user: UserInput, public url?: string) {
     this.env = process.env.NODE_ENV as string;
     this.host = config.get<string>("EMAIL_HOST");
+    if (!(this.env === "production")) this.getEnv();
+  }
+
+  private getEnv() {
     this.port = config.get<number>("EMAIL_PORT");
     this.emailUserName = config.get<string>("EMAIL_USER_NAME");
     this.emailPassword = config.get<string>("EMAIL_PASSWORD");
