@@ -45,6 +45,7 @@ app.use(
 );
 
 //Routes
+app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 app.use("/api/v1/tours", tourRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/review", reviewRoute);
