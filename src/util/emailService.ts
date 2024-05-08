@@ -1,3 +1,4 @@
+import path from "path";
 import nodemailer, { Transporter } from "nodemailer";
 import config from "config";
 import Mail from "nodemailer/lib/mailer";
@@ -49,11 +50,11 @@ export class EmailService {
   }
 
   async send(templateName: string, subject: string, data: object) {
-    const html = await ejs.renderFile(`${__dirname}/../templates/base.ejs`, {
-      body: await ejs.renderFile(
-        `${__dirname}/../templates/${templateName}.ejs`,
-        data
-      ),
+    const templatesDir = path.resolve(__dirname, "../templates");
+    const baseTemplatePath = path.join(templatesDir, `base.ejs`);
+    const childrenTemplatePath = path.join(templatesDir, `${templateName}.ejs`);
+    const html = await ejs.renderFile(baseTemplatePath, {
+      body: await ejs.renderFile(childrenTemplatePath, data),
     });
     const from = (
       this.env === "production" ? config.get("FROM") : "Adventure@hub.io"
