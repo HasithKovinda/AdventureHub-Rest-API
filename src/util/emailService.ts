@@ -50,9 +50,17 @@ export class EmailService {
   }
 
   async send(templateName: string, subject: string, data: object) {
-    const templatesDir = path.resolve(__dirname, "../templates");
-    const baseTemplatePath = path.join(templatesDir, `base.ejs`);
+    const templatesDir = path.resolve(process.cwd(), "build/templates");
+    const baseTemplatePath = path.join(templatesDir, "base.ejs");
+    console.log(
+      "🚀 ~ EmailService ~ send ~ baseTemplatePath:",
+      baseTemplatePath
+    );
     const childrenTemplatePath = path.join(templatesDir, `${templateName}.ejs`);
+    console.log(
+      "🚀 ~ EmailService ~ send ~ childrenTemplatePath:",
+      childrenTemplatePath
+    );
     const html = await ejs.renderFile(baseTemplatePath, {
       body: await ejs.renderFile(childrenTemplatePath, data),
     });
