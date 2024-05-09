@@ -8,7 +8,7 @@ export async function validateTourExits(
   next: NextFunction
 ) {
   const tour = await RepositorySingleton.getTourRepositoryInstance().findOne({
-    _id: req.params.tourId,
+    _id: req.body.tour,
   });
   if (!tour)
     return next(

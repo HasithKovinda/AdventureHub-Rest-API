@@ -22,6 +22,7 @@ import {
   setProfileImage,
   uploadProfileImage,
 } from "../middleware/ProfileImageUpload";
+
 const router = express.Router();
 
 router.post("/signup", signUp);
