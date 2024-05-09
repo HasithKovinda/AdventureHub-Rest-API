@@ -11,7 +11,7 @@ AdventureHub is a RESTful API built using Node.js, TypeScript, Express, and Mong
 - **Email Sending**: Sends emails using Nodemailer, with Mailtrap for development and SendGrid for production. EJS templates are used for email content.
 - **Authentication**: Implements JWT web token-based authentication.
 - **Role-based Access Control**: Controls access to resources based on user roles.
-- **Authentication**: Advanced data modelling using mongoose.
+- **Data Modelling**:implement advanced data modelling between different resources using mongoose.
 - **Error Handling**: Handles operational and programming errors occurs in development and production, including those from Mongoose, validation, JWT token errors, and custom errors in a type-safe manner.
 - **Security Practices**: Implements best security practices including maximum login attempts, prevention of parameter pollution, protection against SQL injection attacks, rate limiting, and data sanitization is applied where necessary.
 - **Code Quality**: Adheres to best practices in writing clean, maintainable, and efficient code.
