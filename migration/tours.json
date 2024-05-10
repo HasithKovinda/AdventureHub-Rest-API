@@ -15,14 +15,14 @@
       "2021-08-18T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2955",
-    "name": "The Sea Explorer",
+    "name": "The Ocean Voyager",
     "duration": 7,
     "maxGroupSize": 15,
     "difficulty": "medium",
     "guides": ["5c8a22c62f8fb814b56fa18b", "5c8a1f4e2f8fb814b56fa185"],
     "price": 497,
-    "summary": "Exploring the jaw-dropping US east coast by foot and by boat",
-    "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "summary": "Exploring the stunning US east coast by foot and by boat",
+    "description": "Embark on an unforgettable journey along the mesmerizing US East Coast. This immersive adventure combines thrilling exploration on foot with serene voyages by boat. Traverse picturesque landscapes, discover hidden gems, and soak in the rich culture and history of each destination. From the vibrant shores of Miami to the tranquil beauty of secluded islands, every moment promises excitement and wonder. Join us on The Ocean Voyager and create lasting memories as you explore the breathtaking wonders of America's eastern coastline.",
     "imageCover": "tour-2-cover.jpg",
     "locations": [
       {
@@ -71,7 +71,7 @@
       "2021-10-05T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2951",
-    "name": "The Forest Hiker",
+    "name": "The Mountain Trekker",
     "duration": 5,
     "maxGroupSize": 25,
     "difficulty": "easy",
@@ -81,8 +81,8 @@
       "5c8a1f292f8fb814b56fa184"
     ],
     "price": 397,
-    "summary": "Breathtaking hike through the Canadian Banff National Park",
-    "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "summary": "A breathtaking hike through Canada's stunning Banff National Park",
+    "description": "Experience the awe-inspiring beauty of Canada's Banff National Park on this unforgettable hiking adventure. Explore pristine wilderness, majestic mountains, and crystal-clear lakes as you trek through breathtaking landscapes. Immerse yourself in nature's splendor as you encounter diverse wildlife and discover hidden gems along the way. Whether you're a seasoned hiker or a beginner, this expedition offers something for everyone. Join us on The Mountain Trekker and embark on a journey of discovery and exploration in one of the world's most iconic natural wonders.",
     "imageCover": "tour-1-cover.jpg",
     "locations": [
       {
@@ -124,7 +124,7 @@
       "2023-01-06T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c295a",
-    "name": "The Snow Adventurer",
+    "name": "The Alpine Explorer",
     "duration": 4,
     "maxGroupSize": 10,
     "difficulty": "difficult",
@@ -134,8 +134,8 @@
       "5c8a1f4e2f8fb814b56fa185"
     ],
     "price": 997,
-    "summary": "Exciting adventure in the snow with snowboarding and skiing",
-    "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
+    "summary": "An exhilarating adventure in the snow with snowboarding and skiing",
+    "description": "Embark on an adrenaline-fueled journey through the snow-capped peaks of Aspen, USA. This action-packed adventure offers an unparalleled experience for thrill-seekers and snow sports enthusiasts alike. From heart-pounding snowboarding sessions to exhilarating ski runs, each day is filled with excitement and adventure. Traverse rugged terrain, conquer challenging slopes, and take in panoramic views of the majestic Rocky Mountains. Whether you're a seasoned pro or a novice, there's something for everyone on The Alpine Explorer. Join us and make memories that will last a lifetime.",
     "imageCover": "tour-3-cover.jpg",
     "locations": [
       {
@@ -170,7 +170,7 @@
       "2022-08-12T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2961",
-    "name": "The Park Camper",
+    "name": "The Desert Explorer",
     "duration": 10,
     "maxGroupSize": 15,
     "difficulty": "medium",
@@ -180,8 +180,8 @@
       "5c8a201e2f8fb814b56fa186"
     ],
     "price": 1497,
-    "summary": "Breathing in Nature in America's most spectacular National Parks",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!",
+    "summary": "Immerse yourself in nature in America's most spectacular National Parks",
+    "description": "Embark on an unforgettable journey through America's most breathtaking national parks. From the awe-inspiring beauty of Zion Canyon to the majestic wonders of the Grand Canyon, this expedition offers a once-in-a-lifetime opportunity to explore the natural wonders of the American Southwest. Discover hidden gems, encounter diverse wildlife, and marvel at stunning landscapes as you trek through some of the world's most iconic wilderness areas. Join us on The Desert Explorer and experience the beauty and tranquility of America's most spectacular National Parks.",
     "imageCover": "tour-5-cover.jpg",
     "locations": [
       {
@@ -230,14 +230,14 @@
       "2021-06-09T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c295d",
-    "name": "The City Wanderer",
+    "name": "The Urban Adventurer",
     "duration": 9,
     "maxGroupSize": 20,
     "difficulty": "easy",
     "guides": ["5c8a22c62f8fb814b56fa18b", "5c8a201e2f8fb814b56fa186"],
     "price": 1197,
-    "summary": "Living the life of Wanderlust in the US' most beatiful cities",
-    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat lorem ipsum dolor sit amet.\nConsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat!",
+    "summary": "Experience the vibrant life of Wanderlust in the US' most beautiful cities",
+    "description": "Indulge your sense of adventure and explore the vibrant life of America's most beautiful cities. From the iconic skyline of New York City to the sun-kissed beaches of Los Angeles, this expedition offers a thrilling journey through some of the country's most dynamic urban landscapes. Discover hidden gems, immerse yourself in local culture, and experience the pulse of city life as you wander through bustling streets and iconic landmarks. Join us on The Urban Adventurer and embark on an unforgettable journey through the heart of America's most beloved cities.",
     "imageCover": "tour-4-cover.jpg",
     "locations": [
       {
@@ -279,7 +279,7 @@
       "2022-03-18T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2966",
-    "name": "The Sports Lover",
+    "name": "The Outdoor Enthusiast",
     "duration": 14,
     "maxGroupSize": 8,
     "difficulty": "difficult",
@@ -289,8 +289,8 @@
       "5c8a1f4e2f8fb814b56fa185"
     ],
     "price": 2997,
-    "summary": "Surfing, skating, parajumping, rock climbing and more, all in one tour",
-    "description": "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nVoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur!",
+    "summary": "Experience the thrill of surfing, skating, parajumping, rock climbing and more, all in one tour",
+    "description": "Experience the thrill of outdoor adventure with The Outdoor Enthusiast tour. From the sun-drenched beaches of Point Dume to the rugged beauty of Yosemite National Park, this expedition offers an exhilarating journey through California's most iconic landscapes. Whether you're carving up the waves at Venice Skate Park or soaring through the sky at San Diego Skydive, each day brings new opportunities for excitement and discovery. Join us and experience the ultimate adrenaline rush with The Outdoor Enthusiast.",
     "imageCover": "tour-6-cover.jpg",
     "locations": [
       {
@@ -346,14 +346,14 @@
       "2022-01-30T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2970",
-    "name": "The Star Gazer",
+    "name": "The Night Sky Explorer",
     "duration": 9,
     "maxGroupSize": 8,
     "difficulty": "medium",
     "guides": ["5c8a21d02f8fb814b56fa189", "5c8a1f292f8fb814b56fa184"],
     "price": 2997,
-    "summary": "The most remote and stunningly beautiful places for seeing the night sky",
-    "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "summary": "Explore the most remote and stunningly beautiful places for observing the night sky",
+    "description": "Immerse yourself in the awe-inspiring beauty of the night sky with The Night Sky Explorer tour. From the remote wilderness of Natural Bridges National Monument to the iconic vistas of Horseshoe Bend, this expedition offers a unique opportunity to experience some of the world's most breathtaking celestial displays. Whether you're gazing in wonder at the Milky Way or witnessing the mesmerizing dance of the Northern Lights, each night brings new wonders to behold. Join us and embark on an unforgettable journey through the cosmos with The Night Sky Explorer.",
     "imageCover": "tour-8-cover.jpg",
     "locations": [
       {
@@ -395,7 +395,7 @@
       "2022-12-12T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2974",
-    "name": "The Northern Lights",
+    "name": "The Aurora Hunter",
     "duration": 3,
     "maxGroupSize": 12,
     "difficulty": "easy",
@@ -405,8 +405,8 @@
       "5c8a23412f8fb814b56fa18c"
     ],
     "price": 1497,
-    "summary": "Enjoy the Northern Lights in one of the best places in the world",
-    "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
+    "summary": "Witness the breathtaking Northern Lights in one of the world's best locations",
+    "description": "Embark on an unforgettable journey to witness the breathtaking beauty of the Northern Lights with The Aurora Hunter tour. From the pristine wilderness of Yellowknife to the mesmerizing spectacle of the aurora borealis, this expedition offers a once-in-a-lifetime opportunity to experience one of nature's most extraordinary phenomena. Whether you're marveling at the shimmering curtains of light dancing across the sky or capturing stunning photographs of the aurora, each moment is sure to leave you spellbound. Join us and discover the magic of the Northern Lights with The Aurora Hunter.",
     "imageCover": "tour-9-cover.jpg",
     "locations": [
       {
@@ -434,14 +434,14 @@
       "2021-09-01T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c296c",
-    "name": "The Wine Taster",
+    "name": "The Vineyard Explorer",
     "duration": 5,
     "maxGroupSize": 8,
     "difficulty": "easy",
     "guides": ["5c8a22c62f8fb814b56fa18b", "5c8a23412f8fb814b56fa18c"],
     "price": 1997,
-    "summary": "Exquisite wines, scenic views, exclusive barrel tastings,  and much more",
-    "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "summary": "Experience exquisite wines, scenic views, exclusive barrel tastings, and more",
+    "description": "Indulge your senses and explore the rich tapestry of California's wine country with The Vineyard Explorer tour. From the historic vineyards of Beringer Vineyards to the scenic vistas of Clos Pegase Winery & Tasting Room, this expedition offers a unique opportunity to experience some of the finest wines and most breathtaking landscapes in the world. Whether you're sipping exquisite wines, enjoying panoramic views of the Napa Valley, or sampling exclusive barrel tastings, each day brings new delights to savor. Join us and discover the beauty and bounty of California's wine country with The Vineyard Explorer.",
     "imageCover": "tour-7-cover.jpg",
     "locations": [
       {
