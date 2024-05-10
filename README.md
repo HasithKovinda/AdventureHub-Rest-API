@@ -11,7 +11,7 @@ AdventureHub is a RESTful API built using Node.js, TypeScript, Express, and Mong
 - **Email Sending**: Sends emails using Nodemailer, with Mailtrap for development and SendGrid for production. EJS templates are used for email content.
 - **Authentication**: Implements JWT web token-based authentication.
 - **Role-based Access Control**: Controls access to resources based on user roles.
-- **Data Modelling**:implement advanced data modelling between different resources using mongoose.
+- **Data Modelling**: implement advanced data modelling between different resources using mongoose.
 - **Error Handling**: Handles operational and programming errors occurs in development and production, including those from Mongoose, validation, JWT token errors, and custom errors in a type-safe manner.
 - **Security Practices**: Implements best security practices including maximum login attempts, prevention of parameter pollution, protection against SQL injection attacks, rate limiting, and data sanitization is applied where necessary.
 - **Code Quality**: Adheres to best practices in writing clean, maintainable, and efficient code.
@@ -24,15 +24,16 @@ AdventureHub is a RESTful API built using Node.js, TypeScript, Express, and Mong
 
 2. **Install Dependencies**: Run `npm install` to install all required dependencies.
 
-3. **Environment Configuration**: Create `.env` files for both development and production environments. Include necessary environment variables such as database connection string, Cloudinary credentials, SendGrid API key, JWT secret, etc.
+3. **Environment Configuration**: Create `.env` files for both development and production environments called `development.env`and `production.env`.
+   Include necessary environment variables such as database connection string, Cloudinary credentials, SendGrid API key, JWT secret, etc.
 
-4. **Database Setup**: Ensure MongoDB is installed and running. Configure the connection string in the `.env` file.
+4. **Database Setup**: Ensure MongoDB is installed and running. Configure the connection string in the `.env` files.
 
-5. **Cloudinary Setup**: Sign up for a Cloudinary account and obtain API credentials. Configure these credentials in the `.env` file.
+5. **Cloudinary Setup**: Sign up for a Cloudinary account and obtain API credentials. Configure these credentials in the `.env` files.
 
-6. **SendGrid Setup**: Sign up for a SendGrid account and obtain an API key. Configure this key in the `.env` file.
+6. **SendGrid Setup**: Sign up for a SendGrid account and obtain an API key. Configure this key in the `production.env` file.
 
-7. **Run the Application**: Execute `npm start` to run the application in production mode. For development, use `npm run dev`.
+7. **Run the Application**: Execute `npm run prod` to run the application in production mode. For development, use `npm run dev`.use `npm start` to run application in hosted platform.
 
 ## API Documentation
 
